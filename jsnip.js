@@ -1,10 +1,10 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.3 Alpha
+ * @version 0.3.1 Alpha
  * @author: Carl Saggs
  * 
  */
-window.onload = function(){
+window.addEventListener("load",function(){
 
 	//List of valid Snippets
 	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
@@ -236,7 +236,6 @@ window.onload = function(){
 		for(var s=0;s<nodes.length;s++){
 			//If they happen to be a snippet, call the relevnt snippet function
 			if(type = base.classMatch(nodes[s],validSnippets)){
-				
 				//Call function of the same name (as found in snippet)
 				new snippet[type](nodes[s]);
 
@@ -432,4 +431,4 @@ window.onload = function(){
 	
 	//Run it all!
 	parsePage();
- }
+ },false);
