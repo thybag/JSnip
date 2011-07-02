@@ -1,6 +1,6 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.3.1 Alpha
+ * @version 0.3.2 Alpha
  * @author: Carl Saggs
  * 
  */
