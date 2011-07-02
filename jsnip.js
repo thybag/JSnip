@@ -166,6 +166,7 @@ window.addEventListener("load",function(){
 				if(time == null){
 					time = 20;
 					if(node.offsetHeight < 100)time = 10;
+					if(node.offsetHeight < 50)time = 5;
 				}
 				var incr = parseInt(-cur_margin)/time;
 				
@@ -201,6 +202,7 @@ window.addEventListener("load",function(){
 				if(time == null){
 					time = 20;
 					if(node.offsetHeight < 100)time = 10;
+					if(node.offsetHeight < 50)time = 5;
 				}
 				
 				var incr = parseInt(-box_height)/time;

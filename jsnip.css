@@ -45,12 +45,18 @@
 .jsnipShowHide {
 			margin:4px 2px;
 			clear:both;
+			color:#000;
+			overflow:hidden;
 }
 .jsnipShowHide .inner{
 	border:solid 1px #999;
 	background-color:#f9f9f9;
 	padding:4px;
 	overflow:hidden;
+	margin-left:0 !important;
+	margin-right:0 !important;
+	position:static !important;
+	
 }
 .jsnipShowHide .inner p {margin:6px 2px;}
 .jsnipShowHide .title:hover {
@@ -74,7 +80,7 @@
 	-moz-transition: -moz-transform 0.2s ease-in;
 } 
 /* Tabs */
-.jsnipTabs {margin:2px;}
+.jsnipTabs {margin:2px; color:#000;}
 .jsnipTabs .tabContent {
 	border:solid 1px #444;
 	margin-bottom:5px;
@@ -92,10 +98,9 @@
 }       
 .jsnipTabs .tabBar {
 	list-style:none;
-	margin:0;
+	margin: 5px 0 0 0 !important; 
 	padding:0 0 2px;
-	margin-top:5px;
-	border-bottom:solid 4px #444;
+	border-bottom: solid 4px #444;
 }
 .jsnipTabs .tabBar li {
 	border-top-left-radius: 2px;

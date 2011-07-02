@@ -18,6 +18,7 @@
 		.tabsLeft {float:left;width:470px;} 
 		.float_left {float:left;margin:8px;margin-top:0;} 
 		.display_center {margin: 4px auto;}
+		.f_right {float:right; margin:4px;}
 	</style>
 </head>
 <body>
@@ -32,8 +33,8 @@
 				<h2>Welcome</h2>
 				<p><strong>Welcome to the JSnip Sample page.</strong></p>
 				<p>
-					JSnip is designed to allow website owners to easily add highly customisable interactive elements to their webpages without any
-					knowleage of JavaScript itself.
+					<strong>JSnip</strong> is a lightweight JavaScript based Snipping package, aimed at those who want to add 
+					interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
 				</p>
 				<p>
 				This version of Jsnip contains 3 snippet types.
@@ -42,9 +43,10 @@
 					<li>JSnipShowHide</li>
 					<li>JsnipImageSwitcher</li>
 				</ul>
-				<p>For full useage instructions please check out my article <a href='#'>here</a>.</p>
-				
-				
+				<p>For basic usage instructions please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
+				<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
+				<p>&nbsp;</p>
+				<p>If you'd like to request a new snippet for the next version feel free to get in <a href="http://userbag.co.uk/contact/">touch</a>.</p>
 			</div>
 			<div>
 				<h2>About</h2>
@@ -60,10 +62,11 @@
 			</div>
 			<div>
 				<h2>How does it work?</h2>
-				<p>I'm planning to write up a nice overview of how the key features of Jsnip were implimented, though
-				until this happens, this tab is just a coming soon. Sorry.</p>
+				<p>I'm planning to write up a nice little guide to how JSnip functions behind the scenes.
+				For now though this Tab is just another one of those annoying "coming soon" place holder pages you see.
+				</p>
 				<div class='jsnipShowHide' title='Open me'>
-				<p>Sample text here.</p>
+				<p>This is just here to show that ShowHides are happy to work inside tabs.</p>
 				</div>
 			</div>
 		</div>	
@@ -85,23 +88,23 @@
 
 			</div>
 			<div class='jsnipShowHide' title='Closed box 2'>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
-				<p>This box was closed</p>
+				<p>Only a little bit of text</p>
+
 			</div>
 			<div class='jsnipShowHide' title='Closed box 3' >
-				<p>This box has an image switcher in it</p>
-				<div class='jsnipImageSwitcher display_center' style='width:400px;'>
+				<div class='jsnipImageSwitcher f_right' style='width:400px;'>
 					<img src="img/skunk.jpg" alt="A baby skunk!"/>
 					<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
 					<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
 					<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
 					<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
 				</div>	
+				
+				<p>This box has both a chunk of text and an ImageSwitcher in it.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.
+				Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros.</p><p> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+
+				
 			</div>
 		</div>
 
