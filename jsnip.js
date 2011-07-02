@@ -8,224 +8,6 @@ window.addEventListener("load",function(){
 
 	//List of valid Snippets
 	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
-	
-	/**
-	 * Base provides a set of useful JavaScript functions for use by the
-	 * JSnip Snippets.
-	 * @author Carl Saggs
-	 * @version 0.3 Alpha
-	 *
-	 * Base.animation provides the animation functions used.
-	 */
-	var base = new function(){
-		/**
-		 * classMatch
-		 * Does this node have a class contained the the provided array
-		 * @param node DOM Node
-		 * @param validArray Array of Class Names
-		 */
-		this.classMatch = function(node,validArray){
-			//If the node only has the one class.
-			if(node.className.indexOf(' ') == -1){
-				for(var v=0;v<validArray.length;v++){
-					if(node.className == validArray[v]) return validArray[v];
-				}
-			//If the node has multiple class's
-			}else{
-				for(var v=0;v<validArray.length;v++){
-					if(node.className.indexOf(validArray[v]) != -1) return validArray[v];
-				}
-			}
-		}
-		/**
-		 * addClass
-		 * add's a CSS class to a DOM node.
-		 * @param node DOM Node
-		 * @param nclass Name of class to apply
-		 */
-		this.addClass = function(node,nclass){
-			if(node.className.indexOf(nclass) !== -1) return;//if already exists
-			node.className = node.className+' '+nclass;
-		}
-		/**
-		 * removeClass
-		 * removes a CSS class to a DOM node.
-		 * @param node DOM Node
-		 * @param nclass Name of class to remove
-		 */
-		this.removeClass = function(node,nclass){
-			if(node.className.indexOf(nclass) == -1) return;//if we dont have this class
-			if(node.className.indexOf(' ') == -1){ node.className = nclass; return;}//if this is the only class
-			node.className = node.className.replace(nclass,'');
-		}
-		/**
-		 * prepend
-		 * Add's one DOM node to the start of another.
-		 * @param node DOM Node to add
-		 * @param parent DOM Node to place first node in to
-		 */
-		this.prepend = function(node,parent){
-			parent.insertBefore(node,parent.firstChild);
-		}
-		/**
-		 * Rotate
-		 * Rotates a Node to a given angle
-		 * @param node DOM Node
-		 * @param rotation int 
-		 */
-		this.rotate = function(node,rotation){
-			node.style.MozTransform="rotate("+rotation+"deg)";
-			node.style.WebkitTransform="rotate("+rotation+"deg)";
-			node.style.OTransform="rotate("+rotation+"deg)";
-			node.style.msTransform="rotate("+rotation+"deg)";
-			node.style.Transform="rotate("+rotation+"deg)";
-		}
-		/**
-		 * ajaxGet
-		 * Untested and currently not in use.
-		 * @param path to open
-		 * @param callback fucntion
-		 */
-		this.ajaxGet = function(location,callback){
-			try {xmlhttp = window.XMLHttpRequest?new XMLHttpRequest(): new ActiveXObject("Microsoft.XMLHTTP");}  catch (e) { }
-				xmlhttp.onreadystatechange = function(){
-					if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
-						callback(xmlhttp.responseText);
-					}
-				}
-				xmlhttp.open("GET", location, true);
-				xmlhttp.send(null);
-		}
-		/**
-		 * Base.animate provides a set animation functions to the Jsnip Library
-		 * @author Carl Saggs
-		 * @version 0.3 Alpha
-		 */
-		this.animate = new function(){
-			/**
-			 * fadeIn
-			 * Fade DOM node in.
-			 * @param node DOM node
-			 * @param callback function (optional)
-			 */
-			this.fadeIn = function(node, callback){
-				var incr = 0.1;
-				var cur_op = 0;
-				node.style.opacity = 0;
-				node.style.display = '';//Use deafult element style
-				var interval = setInterval(function(){
-					cur_op += incr;
-					node.style.opacity = cur_op;
-					if((cur_op+incr) >= 1){
-						//ensure fade was completed
-						node.style.opacity = 1;
-						
-						clearInterval(interval);
-						//Call callback function is one was provided
-						if(callback !=null)	callback();
-					}
-				}, 20);
-			}
-			/**
-			 * fadeOut
-			 * Fade DOM node out.
-			 * @param node DOM node
-			 * @param callback function (optional)
-			 */
-			this.fadeOut = function(node,callback){
-				var incr = 0.1;
-				var cur_op = 1;
-				node.style.opacity = 1;
-				var interval = setInterval(function(){
-					cur_op -= incr;
-					node.style.opacity = cur_op;
-					if((cur_op+incr) <= 0){
-						//ensure fade was completed
-						node.style.display = 'none';
-						node.style.opacity = 1;
-						
-						clearInterval(interval);
-						
-						//Call callback function is one was provided
-						if(callback !=null)	callback();
-					}
-				}, 20);
-			}
-			/**
-			 * slideDown
-			 * slide DOM node down
-			 * @param node DOM node
-			 * @param callback function (optional)
-			 * @param time int (optional)
-			 */
-			this.slideDown = function(node,callback,time){
-				node.style.display = 'block';
-				node.parentNode.style.overflow = 'hidden';
-				var cur_margin = -node.offsetHeight;
-				//Auto timing (if none is provided)
-				if(time == null){
-					time = 20;
-					if(node.offsetHeight < 100)time = 10;
-					if(node.offsetHeight < 50)time = 5;
-				}
-				var incr = parseInt(-cur_margin)/time;
-				
-				node.style.marginBottom = cur_margin+'px';
-				var interval = setInterval(function(){
-					cur_margin += incr;
-					node.style.marginBottom = cur_margin+'px';
-					if((cur_margin+incr) >= 0){
-						//ensure fade was completed
-						node.style.marginBottom = 0+'px';
-						
-						clearInterval(interval);
-						
-						//Call callback function is one was provided
-						if(callback !=null)	callback();
-					}
-				}, 20);
-				
-			}
-			/**
-			 * slideUp
-			 * slide DOM node up
-			 * @param node DOM node
-			 * @param callback function (optional)
-			 * @param time int (optional)
-			 */
-			this.slideUp = function(node,callback,time){
-				
-				node.parentNode.style.overflow = 'hidden';
-				var cur_margin = 0;
-				var box_height = -node.offsetHeight;
-				//Auto timing (if none is provided)
-				if(time == null){
-					time = 20;
-					if(node.offsetHeight < 100)time = 10;
-					if(node.offsetHeight < 50)time = 5;
-				}
-				
-				var incr = parseInt(-box_height)/time;
-				//node.style.marginBottom = 0+'px';
-				var interval = setInterval(function(){
-					cur_margin -= incr;
-					node.style.marginBottom = cur_margin+'px';
-					if((cur_margin-incr) <= box_height){
-						node.style.display = 'none';
-						//ensure fade was completed
-						node.style.marginBottom = 0+'px';
-						
-						clearInterval(interval);
-						
-						//Call callback function is one was provided
-						if(callback !=null)	callback();
-					}
-				}, 20);
-				
-			}
-		}
-		
-	}
 	/**
 	 * parsePage
 	 * Called once the page is loaded, this will check through every DIV element in the page
@@ -431,6 +213,242 @@ window.addEventListener("load",function(){
 		}
 	}
 	
-	//Run it all!
+	//Run the parser
 	parsePage();
  },false);
+ 
+ /**
+ * Base provides a set of useful JavaScript functions for use by the
+ * JSnip Snippets.
+ * @author Carl Saggs
+ * @version 0.3 Alpha
+ *
+ * Base.animation provides the animation functions used.
+ */
+var base = new function(){
+	/**
+	 * classMatch
+	 * Does this node have a class contained the the provided array
+	 * @param node DOM Node
+	 * @param validArray Array of Class Names
+	 */
+	this.classMatch = function(node,validArray){
+		//If the node only has the one class.
+		if(node.className.indexOf(' ') == -1){
+			for(var v=0;v<validArray.length;v++){
+				if(node.className == validArray[v]) return validArray[v];
+			}
+		//If the node has multiple class's
+		}else{
+			for(var v=0;v<validArray.length;v++){
+				if(node.className.indexOf(validArray[v]) != -1) return validArray[v];
+			}
+		}
+	}
+	/**
+	 * addClass
+	 * add's a CSS class to a DOM node.
+	 * @param node DOM Node
+	 * @param nclass Name of class to apply
+	 */
+	this.addClass = function(node,nclass){
+		if(node.className.indexOf(nclass) !== -1) return;//if already exists
+		node.className = node.className+' '+nclass;
+	}
+	/**
+	 * removeClass
+	 * removes a CSS class to a DOM node.
+	 * @param node DOM Node
+	 * @param nclass Name of class to remove
+	 */
+	this.removeClass = function(node,nclass){
+		if(node.className.indexOf(nclass) == -1) return;//if we dont have this class
+		if(node.className.indexOf(' ') == -1){ node.className = nclass; return;}//if this is the only class
+		node.className = node.className.replace(nclass,'');
+	}
+	/**
+	 * prepend
+	 * Add's one DOM node to the start of another.
+	 * @param node DOM Node to add
+	 * @param parent DOM Node to place first node in to
+	 */
+	this.prepend = function(node,parent){
+		parent.insertBefore(node,parent.firstChild);
+	}
+	/**
+	 * Rotate
+	 * Rotates a Node to a given angle
+	 * @param node DOM Node
+	 * @param rotation int 
+	 */
+	this.rotate = function(node,rotation){
+		node.style.MozTransform="rotate("+rotation+"deg)";
+		node.style.WebkitTransform="rotate("+rotation+"deg)";
+		node.style.OTransform="rotate("+rotation+"deg)";
+		node.style.msTransform="rotate("+rotation+"deg)";
+		node.style.Transform="rotate("+rotation+"deg)";
+	}
+	/**
+	 * ajaxGet
+	 * Untested and currently not in use.
+	 * @param path to open
+	 * @param callback fucntion
+	 */
+	this.ajaxGet = function(location,callback){
+		try {xmlhttp = window.XMLHttpRequest?new XMLHttpRequest(): new ActiveXObject("Microsoft.XMLHTTP");}  catch (e) { }
+			xmlhttp.onreadystatechange = function(){
+				if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+					callback(xmlhttp.responseText);
+				}
+			}
+			xmlhttp.open("GET", location, true);
+			xmlhttp.send(null);
+	}
+	/**
+	 * ajaxGetJSON
+	 * Gets a JSON file from the server and returns a JSON object
+	 * @param path to JSON file.
+	 * @param callback fucntion
+	 */
+	this.ajaxGetJSON = function(location,callback){
+		var cback = callback;
+		this.ajaxGet(location, function(json){
+			if(JSON){
+				var parsed = JSON.parse(json);
+				cback(parsed);
+			}
+			//Fallback is disabled by default for securty reasons.
+			//cback(eval('('+json+')'));
+		});
+	}
+	/**
+	 * Base.animate provides a set animation functions to the Jsnip Library
+	 * @author Carl Saggs
+	 * @version 0.3 Alpha
+	 */
+	this.animate = new function(){
+		/**
+		 * fadeIn
+		 * Fade DOM node in.
+		 * @param node DOM node
+		 * @param callback function (optional)
+		 */
+		this.fadeIn = function(node, callback){
+			var incr = 0.1;
+			var cur_op = 0;
+			node.style.opacity = 0;
+			node.style.display = '';//Use deafult element style
+			var interval = setInterval(function(){
+				cur_op += incr;
+				node.style.opacity = cur_op;
+				if((cur_op+incr) >= 1){
+					//ensure fade was completed
+					node.style.opacity = 1;
+					
+					clearInterval(interval);
+					//Call callback function is one was provided
+					if(callback !=null)	callback();
+				}
+			}, 20);
+		}
+		/**
+		 * fadeOut
+		 * Fade DOM node out.
+		 * @param node DOM node
+		 * @param callback function (optional)
+		 */
+		this.fadeOut = function(node,callback){
+			var incr = 0.1;
+			var cur_op = 1;
+			node.style.opacity = 1;
+			var interval = setInterval(function(){
+				cur_op -= incr;
+				node.style.opacity = cur_op;
+				if((cur_op+incr) <= 0){
+					//ensure fade was completed
+					node.style.display = 'none';
+					node.style.opacity = 1;
+					
+					clearInterval(interval);
+					
+					//Call callback function is one was provided
+					if(callback !=null)	callback();
+				}
+			}, 20);
+		}
+		/**
+		 * slideDown
+		 * slide DOM node down
+		 * @param node DOM node
+		 * @param callback function (optional)
+		 * @param time int (optional)
+		 */
+		this.slideDown = function(node,callback,time){
+			node.style.display = 'block';
+			node.parentNode.style.overflow = 'hidden';
+			var cur_margin = -node.offsetHeight;
+			//Auto timing (if none is provided)
+			if(time == null){
+				time = 20;
+				if(node.offsetHeight < 100)time = 10;
+				if(node.offsetHeight < 50)time = 5;
+			}
+			var incr = parseInt(-cur_margin)/time;
+			
+			node.style.marginBottom = cur_margin+'px';
+			var interval = setInterval(function(){
+				cur_margin += incr;
+				node.style.marginBottom = cur_margin+'px';
+				if((cur_margin+incr) >= 0){
+					//ensure fade was completed
+					node.style.marginBottom = 0+'px';
+					
+					clearInterval(interval);
+					
+					//Call callback function is one was provided
+					if(callback !=null)	callback();
+				}
+			}, 20);
+			
+		}
+		/**
+		 * slideUp
+		 * slide DOM node up
+		 * @param node DOM node
+		 * @param callback function (optional)
+		 * @param time int (optional)
+		 */
+		this.slideUp = function(node,callback,time){
+			
+			node.parentNode.style.overflow = 'hidden';
+			var cur_margin = 0;
+			var box_height = -node.offsetHeight;
+			//Auto timing (if none is provided)
+			if(time == null){
+				time = 20;
+				if(node.offsetHeight < 100)time = 10;
+				if(node.offsetHeight < 50)time = 5;
+			}
+			
+			var incr = parseInt(-box_height)/time;
+			//node.style.marginBottom = 0+'px';
+			var interval = setInterval(function(){
+				cur_margin -= incr;
+				node.style.marginBottom = cur_margin+'px';
+				if((cur_margin-incr) <= box_height){
+					node.style.display = 'none';
+					//ensure fade was completed
+					node.style.marginBottom = 0+'px';
+					
+					clearInterval(interval);
+					
+					//Call callback function is one was provided
+					if(callback !=null)	callback();
+				}
+			}, 20);
+			
+		}
+	}
+	
+}
+ 
