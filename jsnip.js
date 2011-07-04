@@ -98,13 +98,32 @@ window.addEventListener("load",function(){
 		 * @param Node defined as showHide
 		 */
 		this.jsnipShowHide = function(node){
-			//create div to encapsolate content of showHide
-			var inner = document.createElement('div');
-			inner.className = 'inner';
-			inner.innerHTML = node.innerHTML;
-			//Blank real div
-			node.innerHTML = '';
+		
+			//If a title node already exits, use it rather than creating a new one.
+			//Stores title node in TitleBar
+			test = node.getElementsByTagName('div')[0];
+			if(test && test.className == 'title'){
+				//titleText = node.getElementsByTagName('div')[0].innerHTML;
+				var titleBar = test.cloneNode(true);
+				base.remove(test);
+			}			
 			
+			//Test if inner exists
+			test = node.getElementsByTagName('div')[0];
+			if(test && test.className == 'inner'){
+				var inner = test;
+			}else{
+				//create div to encapsolate content of showHide
+				var inner = document.createElement('div');
+				inner.className = 'inner';
+				inner.innerHTML = node.innerHTML;
+				//Blank real div
+				node.innerHTML = '';
+				node.appendChild(inner);
+			}
+			
+			
+			//Set up the showHide function
 			this.showHide = function(){
 				if(inner.style.display == 'none'){ 
 					base.animate.slideDown(inner);
@@ -116,12 +135,23 @@ window.addEventListener("load",function(){
 				}
 				
 			}
-			var titleBar = document.createElement('div');
-			titleBar.className = 'title';
-			titleBar.innerHTML = node.title;
+			
+			//If a titleBar node doesn't exist, create a new one
+			if(titleBar == null){
+				//Create the new title bar
+				var titleBar = document.createElement('div');
+				titleBar.className = 'title';
+				//Add the correct name
+				if(node.title){
+					titleBar.innerHTML = node.title;
+				}else{
+					titleBar.innerHTML = "Unknown";
+				}
+			}
+			//attach the onclick
 			titleBar.addEventListener('click',this.showHide,false);
 			
-			node.appendChild(titleBar);
+			base.prepend(titleBar,node);
 			
 			//Create arrow in Canvas (who needs images :p )
 			var arrow = document.createElement('canvas');
@@ -140,7 +170,7 @@ window.addEventListener("load",function(){
 			a.fillStyle = "rgb(255,255,255)";
 			a.fill();
 				
-			node.appendChild(inner);
+			
 			if(node.getAttribute('itemtype') != 'open'){
 				inner.style.display = 'none';
 				base.rotate(arrow,180);
@@ -185,22 +215,32 @@ window.addEventListener("load",function(){
 			//For each potental Tab
 			for(var t=0;t<tabs.length;t++){
 				tabs[t].className = 'tabContent';
-				//Create tab Item
+				
+				if(tabs[t].title){
+					//Use title node in div.
+					titleText = tabs[t].title;
+				}else{
+					//get Title node from document
+					titleNode = tabs[t].getElementsByTagName('h2')[0];
+					//If this node has no title, set title as unknown.
+					if(titleNode != null) {
+						titleText = titleNode.innerHTML;
+						//Remove the title node once it has been used for a tab.
+						tabs[t].removeChild(titleNode);
+					}else{
+						titleText = 'unknown';
+					}
+				}
+				//Create the Tab itself
 				li = document.createElement('li');
 				li.setAttribute('idx',t);
-				titleNode = tabs[t].getElementsByTagName('h2')[0];
-				//If this node has no title, ignore it
-				if(titleNode != null) {
-					li.innerHTML = titleNode.innerHTML;
-					tabs[t].removeChild(titleNode);
-				}else{
-					li.innerHTML = 'unknown';
-				}
-				
+				li.innerHTML = titleText;		
+				//Make the first tab active	
 				if(t == 0){base.addClass(li,'active');}
+				//Add the tab to the Tab bar.
 				tabBar.appendChild(li);
-				//Update and remove tabs themselves
 				
+				//hide the tab contents of inactive tabs
 				if(t != 0){
 					tabs[t].style.display = 'none';
 				}
@@ -274,6 +314,15 @@ var base = new function(){
 	 */
 	this.prepend = function(node,parent){
 		parent.insertBefore(node,parent.firstChild);
+	}
+	/**
+	 * Remove
+	 * Remove a node from the DOM
+	 * @param node DOM Node to remove
+	 * @return Copy of the removed node.
+	 */
+	this.remove = function(node){
+		node.parentNode.removeChild(node);
 	}
 	/**
 	 * Rotate
