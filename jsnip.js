@@ -4,258 +4,7 @@
  * @author: Carl Saggs
  * 
  */
-window.addEventListener("load",function(){
 
-	//List of valid Snippets
-	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
-	/**
-	 * parsePage
-	 * Called once the page is loaded, this will check through every DIV element in the page
-	 * looking for JSnip snippets. Any found will be created.
-	 */
-	function parsePage(){
-		//Get all nodes that could be snippets
-		var nodes = document.getElementsByTagName('div');
-		//Check all of them
-		for(var s=0;s<nodes.length;s++){
-			//If they happen to be a snippet, call the relevnt snippet function
-			if(type = base.classMatch(nodes[s],validSnippets)){
-				//Call function of the same name (as found in snippet)
-				new snippet[type](nodes[s]);
-
-			}
-		}
-	}
-	/**
-	 * snippet
-	 * JSnip Snippets are contained within this function.
-	 */
-	var snippet = new function(){
-		/**
-		 * Image Switcher
-		 * Create an image Switcher from provided node
-		 * @param Node defined as Image Switcher
-		 */
-		this.jsnipImageSwitcher = function(node){
-			var images = node.getElementsByTagName('img');//Get images contained
-			var current = 0;
-			//Create control bar DOM object
-			var n = document.createElement('div');
-			n.className ='bar';
-			node.appendChild(n);
-			//Create tagline
-			var tagLine = document.createElement('div');
-			tagLine.className = 'tagLine';
-			
-			var scrollChange = function(evt) {
-				//Get array of all the buttons, then make them show as inactive
-				buttonAr = this.parentNode.getElementsByTagName('span');
-				for(var a=0;a<buttonAr.length;a++){
-					base.removeClass(buttonAr[a],'active');
-				}
-				//Make the clicked button the new active one.
-				base.addClass(this,'active');
-				
-				//Update the current image index (store old, so we can still use it temporairly)
-				old = current;
-				current = this.getAttribute('idx');
-				//Update tagline with the new title
-				tagLine.innerHTML = images[current].getAttribute('alt');
-				//Fade old image out, fade new image in.
-				base.animate.fadeOut(images[old],function(){
-					base.animate.fadeIn(images[current]);
-				});				
-			}
-			//Loop threw images to actually set the snippet up.
-			for(var i=0;i<images.length;i++){
-				//If its not the very first image, make it invisable.
-				if(i!==0) images[i].style.display = 'none';
-				//Create the link element (button used to change image)
-				
-				var l = document.createElement('span');
-				l.innerHTML = '.';
-				l.setAttribute('idx',i);
-				n.appendChild(l);
-		
-				//Make the first image's button active and set the tagline with its alt attribute.
-				if(i==0){ 
-					base.addClass(l,'active');
-					tagLine.innerHTML = images[i].getAttribute('alt');
-				}
-				//If a scroll button gets clicked.
-				l.addEventListener('click',scrollChange,false);
-			}   
-			//add the tagline to the page
-			n.appendChild(tagLine);
-		}
-		
-		/**
-		 * showHide
-		 * Create an showHide from provided node
-		 * @hint title Attribute is the text show
-		 * @hint itemtype Attribute can be set to "open" to make snippet open by default
-		 *
-		 * @param Node defined as showHide
-		 */
-		this.jsnipShowHide = function(node){
-		
-			//If a title node already exits, use it rather than creating a new one.
-			//Stores title node in TitleBar
-			test = node.getElementsByTagName('div')[0];
-			if(test && test.className == 'title'){
-				//titleText = node.getElementsByTagName('div')[0].innerHTML;
-				var titleBar = test.cloneNode(true);
-				base.remove(test);
-			}			
-			
-			//Test if inner exists
-			test = node.getElementsByTagName('div')[0];
-			if(test && test.className == 'inner'){
-				var inner = test;
-			}else{
-				//create div to encapsolate content of showHide
-				var inner = document.createElement('div');
-				inner.className = 'inner';
-				inner.innerHTML = node.innerHTML;
-				//Blank real div
-				node.innerHTML = '';
-				node.appendChild(inner);
-			}
-			
-			
-			//Set up the showHide function
-			this.showHide = function(){
-				if(inner.style.display == 'none'){ 
-					base.animate.slideDown(inner);
-					base.rotate(arrow,0);
-				}
-				else{
-					base.animate.slideUp(inner);
-					base.rotate(arrow,180);
-				}
-				
-			}
-			
-			//If a titleBar node doesn't exist, create a new one
-			if(titleBar == null){
-				//Create the new title bar
-				var titleBar = document.createElement('div');
-				titleBar.className = 'title';
-				//Add the correct name
-				if(node.title){
-					titleBar.innerHTML = node.title;
-				}else{
-					titleBar.innerHTML = "Unknown";
-				}
-			}
-			//attach the onclick
-			titleBar.addEventListener('click',this.showHide,false);
-			
-			base.prepend(titleBar,node);
-			
-			//Create arrow in Canvas (who needs images :p )
-			var arrow = document.createElement('canvas');
-			arrow.className = 'arrow';
-			arrow.width = 18;
-			arrow.height = 8;
-			arrow.style.cssFloat = 'right';
-			titleBar.appendChild(arrow);
-			
-			a = arrow.getContext("2d");
-			a.beginPath();
-			a.moveTo(9, 0)
-			a.lineTo(0, 8);
-			a.lineTo(18, 8);
-			a.lineTo(9, 0);
-			a.fillStyle = "rgb(255,255,255)";
-			a.fill();
-				
-			
-			if(node.getAttribute('itemtype') != 'open'){
-				inner.style.display = 'none';
-				base.rotate(arrow,180);
-			}
-			
-		}
-		/**
-		 * Tabs
-		 * Create a set of Tabs from provided node
-		 * @hint All first Level div's are assumed to be Tabs
-		 * @hint Each tab must contain an H2 which will become the tab title.
-		 *
-		 * @param Node defined as Tabs
-		 */
-		this.jsnipTabs = function(node){
-			//Get all the divs we want to make in to tabs
-			var tabs = node.childNodes;
-			//Clean it up by removing the irrelevnt nodes;
-			for(var t=0;t<tabs.length;t++){
-				if(tabs[t].nodeName != 'DIV'){
-					node.removeChild(tabs[t]);
-				}
-			}
-			//Create Tab Bar
-			var tabBar = document.createElement('ul');
-			tabBar.className = 'tabBar';
-			var currentTab=1;
-			
-			var changeTab = function(){
-				//Unhighlight all the old tabs
-				toptabs = this.parentNode.getElementsByTagName('li');
-				for(var a=0;a<toptabs.length;a++){
-					base.removeClass(toptabs[a],'active');
-				}
-				//Highlight current tab
-				base.addClass(this,'active');
-				//Hide the old Tab inner, update the currentTab, then show the new one.
-				tabs[currentTab].style.display = 'none';
-				currentTab = parseInt(this.getAttribute('idx'))+1;//ignore our tablist
-				tabs[currentTab].style.display = 'block';
-			}
-			//For each potental Tab
-			for(var t=0;t<tabs.length;t++){
-				tabs[t].className = 'tabContent';
-				
-				if(tabs[t].title){
-					//Use title node in div.
-					titleText = tabs[t].title;
-				}else{
-					//get Title node from document
-					titleNode = tabs[t].getElementsByTagName('h2')[0];
-					//If this node has no title, set title as unknown.
-					if(titleNode != null) {
-						titleText = titleNode.innerHTML;
-						//Remove the title node once it has been used for a tab.
-						tabs[t].removeChild(titleNode);
-					}else{
-						titleText = 'unknown';
-					}
-				}
-				//Create the Tab itself
-				li = document.createElement('li');
-				li.setAttribute('idx',t);
-				li.innerHTML = titleText;		
-				//Make the first tab active	
-				if(t == 0){base.addClass(li,'active');}
-				//Add the tab to the Tab bar.
-				tabBar.appendChild(li);
-				
-				//hide the tab contents of inactive tabs
-				if(t != 0){
-					tabs[t].style.display = 'none';
-				}
-				
-				//Attach action to tab click
-				li.addEventListener('click', changeTab,false);
-
-			}
-			base.prepend(tabBar,node);
-		}
-	}
-	
-	//Run the parser
-	parsePage();
- },false);
  
  /**
  * Base provides a set of useful JavaScript functions for use by the
@@ -498,6 +247,299 @@ var base = new function(){
 			
 		}
 	}
+	/**
+	* createNode
+	* Create a DOM node
+	* @param nodeType Type of Node to create
+	* @param jsonAttributes JSON object describing tag features
+	* @param attach Node to place the new node in. (does nothing if not set)
+	*/
+	this.createNode = function(nodeType,jsonAttributes,attach){
+			//Create node of type
+			var node = document.createElement(nodeType);
+			//Attach attributes passed
+			for(var attr in jsonAttributes){
+				node.setAttribute(attr,jsonAttributes[attr]);
+			}
+			//Append if required
+			if(attach !=null && attach !== undefined){
+				if(attach.nodeType==1) attach.appendChild(node);
+				else{
+					this.byId(attach).appendChild(node);
+				}
+			}
+			return node;
+	}
 	
+	//Short Hand Functions
+	this.byId = function(id){
+		return document.getElementById(id);
+	}
+	/**
+	* Onload
+	* Calls provided function once the page has loaded
+	* @param callback function
+	*/
+	this.onLoad = function(callback){
+		window.addEventListener("load",callback,false);
+	}
 }
- 
+/**
+ * Jsnip Snippeter
+ * @version 0.3.3 Alpha
+ * @author: Carl Saggs
+ * 
+ */
+base.onLoad(function(){
+
+	//List of valid Snippets
+	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
+	/**
+	 * parsePage
+	 * Called once the page is loaded, this will check through every DIV element in the page
+	 * looking for JSnip snippets. Any found will be created.
+	 */
+	function parsePage(){
+		//Get all nodes that could be snippets
+		var nodes = document.getElementsByTagName('div');
+		//Check all of them
+		for(var s=0;s<nodes.length;s++){
+			//If they happen to be a snippet, call the relevnt snippet function
+			if(type = base.classMatch(nodes[s],validSnippets)){
+				//Call function of the same name (as found in snippet)
+				new snippet[type](nodes[s]);
+
+			}
+		}
+	}
+	/**
+	 * snippet
+	 * JSnip Snippets are contained within this function.
+	 */
+	var snippet = new function(){
+		/**
+		 * Image Switcher
+		 * Create an image Switcher from provided node
+		 * @param Node defined as Image Switcher
+		 */
+		this.jsnipImageSwitcher = function(node){
+			var images = node.getElementsByTagName('img');//Get images contained
+			var current = 0;
+			//Create control bar DOM object
+			var n = document.createElement('div');
+			n.className ='bar';
+			node.appendChild(n);
+			//Create tagline
+			var tagLine = document.createElement('div');
+			tagLine.className = 'tagLine';
+			
+			var scrollChange = function(evt) {
+				//Get array of all the buttons, then make them show as inactive
+				buttonAr = this.parentNode.getElementsByTagName('span');
+				for(var a=0;a<buttonAr.length;a++){
+					base.removeClass(buttonAr[a],'active');
+				}
+				//Make the clicked button the new active one.
+				base.addClass(this,'active');
+				
+				//Update the current image index (store old, so we can still use it temporairly)
+				old = current;
+				current = this.getAttribute('idx');
+				//Update tagline with the new title
+				tagLine.innerHTML = images[current].getAttribute('alt');
+				//Fade old image out, fade new image in.
+				base.animate.fadeOut(images[old],function(){
+					base.animate.fadeIn(images[current]);
+				});				
+			}
+			//Loop threw images to actually set the snippet up.
+			for(var i=0;i<images.length;i++){
+				//If its not the very first image, make it invisable.
+				if(i!==0) images[i].style.display = 'none';
+				//Create the link element (button used to change image)
+				
+				var l = document.createElement('span');
+				l.innerHTML = '.';
+				l.setAttribute('idx',i);
+				n.appendChild(l);
+		
+				//Make the first image's button active and set the tagline with its alt attribute.
+				if(i==0){ 
+					base.addClass(l,'active');
+					tagLine.innerHTML = images[i].getAttribute('alt');
+				}
+				//If a scroll button gets clicked.
+				l.addEventListener('click',scrollChange,false);
+			}   
+			//add the tagline to the page
+			n.appendChild(tagLine);
+		}
+		
+		/**
+		 * showHide
+		 * Create an showHide from provided node
+		 * @hint title Attribute is the text show
+		 * @hint itemtype Attribute can be set to "open" to make snippet open by default
+		 *
+		 * @param Node defined as showHide
+		 */
+		this.jsnipShowHide = function(node){
+		
+			//If a title node already exits, use it rather than creating a new one.
+			//Stores title node in TitleBar
+			test = node.getElementsByTagName('div')[0];
+			if(test && test.className == 'title'){
+				//titleText = node.getElementsByTagName('div')[0].innerHTML;
+				var titleBar = test.cloneNode(true);
+				base.remove(test);
+			}			
+			
+			//Test if inner exists
+			test = node.getElementsByTagName('div')[0];
+			if(test && test.className == 'inner'){
+				var inner = test;
+			}else{
+				//create div to encapsolate content of showHide
+				var inner = document.createElement('div');
+				inner.className = 'inner';
+				inner.innerHTML = node.innerHTML;
+				//Blank real div
+				node.innerHTML = '';
+				node.appendChild(inner);
+			}
+			
+			
+			//Set up the showHide function
+			this.showHide = function(){
+				if(inner.style.display == 'none'){ 
+					base.animate.slideDown(inner);
+					base.rotate(arrow,0);
+				}
+				else{
+					base.animate.slideUp(inner);
+					base.rotate(arrow,180);
+				}
+				
+			}
+			
+			//If a titleBar node doesn't exist, create a new one
+			if(titleBar == null){
+				//Create the new title bar
+				var titleBar = document.createElement('div');
+				titleBar.className = 'title';
+				//Add the correct name
+				if(node.title){
+					titleBar.innerHTML = node.title;
+				}else{
+					titleBar.innerHTML = "Unknown";
+				}
+			}
+			//attach the onclick
+			titleBar.addEventListener('click',this.showHide,false);
+			
+			base.prepend(titleBar,node);
+			
+			//Create arrow in Canvas (who needs images :p )
+			//var arrow = document.createElement('canvas');
+			var arrow = base.createNode('canvas',{class:'arrow', height:'8', width:'18'},titleBar);
+			//arrow.className = 'arrow';
+			//arrow.width = 18;
+		//	arrow.height = 8;
+			arrow.style.cssFloat = 'right';
+			//titleBar.appendChild(arrow);
+			
+			a = arrow.getContext("2d");
+			a.beginPath();
+			a.moveTo(9, 0)
+			a.lineTo(0, 8);
+			a.lineTo(18, 8);
+			a.lineTo(9, 0);
+			a.fillStyle = "rgb(255,255,255)";
+			a.fill();
+				
+			
+			if(node.getAttribute('itemtype') != 'open'){
+				inner.style.display = 'none';
+				base.rotate(arrow,180);
+			}
+			
+		}
+		/**
+		 * Tabs
+		 * Create a set of Tabs from provided node
+		 * @hint All first Level div's are assumed to be Tabs
+		 * @hint Each tab must contain an H2 which will become the tab title.
+		 *
+		 * @param Node defined as Tabs
+		 */
+		this.jsnipTabs = function(node){
+			//Get all the divs we want to make in to tabs
+			var tabs = node.childNodes;
+			//Clean it up by removing the irrelevnt nodes;
+			for(var t=0;t<tabs.length;t++){
+				if(tabs[t].nodeName != 'DIV'){
+					node.removeChild(tabs[t]);
+				}
+			}
+			//Create Tab Bar
+			var tabBar = base.createNode('ul',{class:'tabBar'});
+			//document.createElement('ul');
+			//tabBar.className = 'tabBar';
+			var currentTab=1;
+			
+			var changeTab = function(){
+				//Unhighlight all the old tabs
+				toptabs = this.parentNode.getElementsByTagName('li');
+				for(var a=0;a<toptabs.length;a++){
+					base.removeClass(toptabs[a],'active');
+				}
+				//Highlight current tab
+				base.addClass(this,'active');
+				//Hide the old Tab inner, update the currentTab, then show the new one.
+				tabs[currentTab].style.display = 'none';
+				currentTab = parseInt(this.getAttribute('idx'))+1;//ignore our tablist
+				tabs[currentTab].style.display = 'block';
+			}
+			//For each potental Tab
+			for(var t=0;t<tabs.length;t++){
+				tabs[t].className = 'tabContent';
+				
+				if(tabs[t].title){
+					//Use title node in div.
+					titleText = tabs[t].title;
+				}else{
+					//get Title node from document
+					titleNode = tabs[t].getElementsByTagName('h2')[0];
+					//If this node has no title, set title as unknown.
+					if(titleNode != null) {
+						titleText = titleNode.innerHTML;
+						//Remove the title node once it has been used for a tab.
+						tabs[t].removeChild(titleNode);
+					}else{
+						titleText = 'unknown';
+					}
+				}
+				//Create the Tab itself
+				li = base.createNode('li',{idx: t});
+				li.innerHTML = titleText;
+				//Make the first tab active	
+				if(t == 0){base.addClass(li,'active');}
+				//Add the tab to the Tab bar.
+				tabBar.appendChild(li);
+				
+				//hide the tab contents of inactive tabs
+				if(t != 0){
+					tabs[t].style.display = 'none';
+				}
+				
+				//Attach action to tab click
+				li.addEventListener('click', changeTab,false);
+
+			}
+			base.prepend(tabBar,node);
+		}
+	}
+	
+	//Run the parser
+	parsePage();
+ });
