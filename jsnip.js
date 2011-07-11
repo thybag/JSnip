@@ -7,14 +7,12 @@
 
  
  /**
- * Base provides a set of useful JavaScript functions for use by the
- * JSnip Snippets.
+ * Base provides a set of simple but often useful JavaScript functions.
  * @author Carl Saggs
- * @version 0.4 Alpha
+ * @version 0.4.8 Alpha
  *
- * Base.animation provides the animation functions used.
+ * @See Base.animation for animation methods
  */
-var base;
 (function(){
 	/**
 	 * classMatch
@@ -23,16 +21,9 @@ var base;
 	 * @param validArray Array of Class Names
 	 */
 	this.classMatch = function(node,validArray){
-		//If the node only has the one class.
-		if(node.className.indexOf(' ') == -1){
-			for(var v=0;v<validArray.length;v++){
-				if(node.className == validArray[v]) return validArray[v];
-			}
-		//If the node has multiple class's
-		}else{
-			for(var v=0;v<validArray.length;v++){
-				if(node.className.indexOf(validArray[v]) != -1) return validArray[v];
-			}
+		//Helper method for Jsnip
+		for(var v=0;v<validArray.length;v++){
+				if(this.hasClass(node,validArray[v])) return validArray[v];
 		}
 	}
 	/**
@@ -42,8 +33,9 @@ var base;
 	 * @param nclass Name of class to apply
 	 */
 	this.addClass = function(node,nclass){
-		if(node.className.indexOf(nclass) !== -1) return;//if already exists
-		node.className = node.className+' '+nclass;
+		if(!this.hasClass(node,nclass)){
+			node.className = node.className+' '+nclass;
+		}
 	}
 	/**
 	 * removeClass
@@ -52,9 +44,18 @@ var base;
 	 * @param nclass Name of class to remove
 	 */
 	this.removeClass = function(node,nclass){
-		if(node.className.indexOf(nclass) == -1) return;//if we dont have this class
-		if(node.className.indexOf(' ') == -1){ node.className = nclass; return;}//if this is the only class
-		node.className = node.className.replace(nclass,'');
+		node.className = node.className.replace(new RegExp('(^|\\s)'+nclass+'(\\s|$)'),'');
+		return;
+	}
+	/**
+	 * addClass
+	 * Checks if a DOM node has a particular Class
+	 * @param node DOM Node
+	 * @param nclass Name of class to apply
+	 * @return boolean
+	 */
+	this.hasClass = function(node, nclass){
+		return (node.className.match(new RegExp('(^|\\s)'+nclass+'(\\s|$)')) != null);
 	}
 	/**
 	 * prepend
@@ -81,6 +82,7 @@ var base;
 	 * @param rotation int 
 	 */
 	this.rotate = function(node,rotation){
+		//This is just here becuse there are so many of em.
 		node.style.MozTransform="rotate("+rotation+"deg)";
 		node.style.WebkitTransform="rotate("+rotation+"deg)";
 		node.style.OTransform="rotate("+rotation+"deg)";
@@ -136,13 +138,16 @@ var base;
 			var incr = 0.22;
 			var cur_op = 0;
 			node.style.opacity = 0;
+			node.style.filter = 'alpha(opacity=0)';
 			node.style.display = '';//Use deafult element style
 			var interval = setInterval(function(){
 				cur_op += incr;
 				node.style.opacity = cur_op;
+				node.style.filter = 'alpha(opacity='+(cur_op*100)+')';
 				if((cur_op+incr) >= 1){
 					//ensure fade was completed
 					node.style.opacity = 1;
+					node.style.filter = 'alpha(opacity=100)';
 					
 					clearInterval(interval);
 					//Call callback function is one was provided
@@ -160,13 +165,17 @@ var base;
 			var incr = 0.22;
 			var cur_op = 1;
 			node.style.opacity = 1;
+			//IE
+			node.style.filter = 'alpha(opacity=100)';
 			var interval = setInterval(function(){
 				cur_op -= incr;
 				node.style.opacity = cur_op;
+				node.style.filter = 'alpha(opacity='+(cur_op*100)+')';
 				if((cur_op+incr) <= 0){
 					//ensure fade was completed
 					node.style.display = 'none';
 					node.style.opacity = 1;
+					node.style.filter = 'alpha(opacity=100)';
 					
 					clearInterval(interval);
 					
@@ -281,17 +290,16 @@ var base;
 	* @param within Node to search. If not provided uses document.
 	* @return NodeList|node
 	*/
-	this.select = function(query,within){
+	this.select = function(query, within){
+		//This function requires sizzle to run
 		if(!base.sizzle) return false;
-		
+		//use document is 2nd param not passed
 		if(within == null || within == 'undefined') within = document;
 		results = base.sizzle.find(query,document).set;
 		//Return node itself if only one result
 		if(results.length == 1) results = results[0];
 		return results;
 	}
-	
-	
 	
 	//Short Hand Functions
 	this.byId = function(id){
@@ -305,7 +313,13 @@ var base;
 	this.onLoad = function(callback){
 		this.addEvent(window,'load',callback);
 	}
-	
+	/**
+	 * AddEvent
+	 * Connect function call to event (Only really here to add IE compatability)
+	 * @param Node to attach event too
+	 * @param event to listen for
+	 * @param function to run when event takes place
+	 */
 	this.addEvent = function(obj, event, callback){
 		if(window.addEventListener){
 				//Browsers that don't suck
@@ -316,9 +330,8 @@ var base;
 		}
 	}
 	
-	
-	//Add to global scope
-	base = this;
+	//Add base to global scope
+	window.base = this;
 })();
 /**
  * Jsnip Snippeter
@@ -339,11 +352,12 @@ base.onLoad(function(){
 		var nodes = document.getElementsByTagName('div');
 		//Check all of them
 		for(var s=0;s<nodes.length;s++){
-			//If they happen to be a snippet, call the relevnt snippet function
-			if(type = base.classMatch(nodes[s],validSnippets)){
-				//Call function of the same name (as found in snippet)
-				new snippet[type](nodes[s]);
-
+			//For each possible snippet
+			for(var v=0;v<validSnippets.length;v++){
+				//If they happen to this snippet, call the relevnt snippet function
+				if(this.hasClass(nodes[s],validSnippets[v])){
+					new snippet[validSnippets[v]](nodes[s]);
+				}				
 			}
 		}
 	}
