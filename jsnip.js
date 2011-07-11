@@ -10,11 +10,12 @@
  * Base provides a set of useful JavaScript functions for use by the
  * JSnip Snippets.
  * @author Carl Saggs
- * @version 0.3 Alpha
+ * @version 0.4 Alpha
  *
  * Base.animation provides the animation functions used.
  */
-var base = new function(){
+var base;
+(function(){
 	/**
 	 * classMatch
 	 * Does this node have a class contained the the provided array
@@ -132,7 +133,7 @@ var base = new function(){
 		 * @param callback function (optional)
 		 */
 		this.fadeIn = function(node, callback){
-			var incr = 0.25;
+			var incr = 0.22;
 			var cur_op = 0;
 			node.style.opacity = 0;
 			node.style.display = '';//Use deafult element style
@@ -156,7 +157,7 @@ var base = new function(){
 		 * @param callback function (optional)
 		 */
 		this.fadeOut = function(node,callback){
-			var incr = 0.25;
+			var incr = 0.22;
 			var cur_op = 1;
 			node.style.opacity = 1;
 			var interval = setInterval(function(){
@@ -191,7 +192,7 @@ var base = new function(){
 				if(node.offsetHeight < 100)time = 10;
 				//if(node.offsetHeight < 50)time = 5;
 			}
-			var incr = parseInt(-cur_margin)/(time/2);
+			var incr = parseInt(-cur_margin)/time;
 			
 			node.style.marginBottom = cur_margin+'px';
 			var interval = setInterval(function(){
@@ -206,7 +207,7 @@ var base = new function(){
 					//Call callback function is one was provided
 					if(callback !=null)	callback();
 				}
-			}, 40);
+			}, 20);
 			
 		}
 		/**
@@ -228,7 +229,7 @@ var base = new function(){
 				//if(node.offsetHeight < 50)time = 5;
 			}
 			
-			var incr = parseInt(-box_height)/(time/2);
+			var incr = parseInt(-box_height)/time;
 			//node.style.marginBottom = 0+'px';
 			var interval = setInterval(function(){
 				cur_margin -= incr;
@@ -243,7 +244,7 @@ var base = new function(){
 					//Call callback function is one was provided
 					if(callback !=null)	callback();
 				}
-			}, 40);
+			}, 20);
 			
 		}
 	}
@@ -262,7 +263,6 @@ var base = new function(){
 				node.setAttribute(attr,jsonAttributes[attr]);
 			}
 			//Append if required
-			
 			if(attach !=null && attach !== undefined){
 			
 				if(attach.nodeType==1){
@@ -282,6 +282,8 @@ var base = new function(){
 	* @return NodeList|node
 	*/
 	this.select = function(query,within){
+		if(!base.sizzle) return false;
+		
 		if(within == null || within == 'undefined') within = document;
 		results = base.sizzle.find(query,document).set;
 		//Return node itself if only one result
@@ -301,9 +303,23 @@ var base = new function(){
 	* @param callback function
 	*/
 	this.onLoad = function(callback){
-		window.addEventListener("load",callback,false);
+		this.addEvent(window,'load',callback);
 	}
-}
+	
+	this.addEvent = function(obj, event, callback){
+		if(window.addEventListener){
+				//Browsers that don't suck
+				obj.addEventListener(event, callback, false);
+		}else{
+				//IE8/7
+				obj.attachEvent('on'+event, callback);
+		}
+	}
+	
+	
+	//Add to global scope
+	base = this;
+})();
 /**
  * Jsnip Snippeter
  * @version 0.3.3 Alpha
@@ -311,7 +327,6 @@ var base = new function(){
  * 
  */
 base.onLoad(function(){
-
 	//List of valid Snippets
 	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
 	/**
@@ -346,22 +361,29 @@ base.onLoad(function(){
 			var images = node.getElementsByTagName('img');//Get images contained
 			var current = 0;
 			//Create control bar DOM object
-			var n = base.createNode('div',{class:'bar'},node);
+			var n = base.createNode('div',{'class':'bar'},node);
 			//Create tagline
-			var tagLine = base.createNode('div',{class:'tagLine'});
+			var tagLine = base.createNode('div',{'class':'tagLine'});
 			
 			var scrollChange = function(evt) {
+				//Resolve this becuse IE doesnt set it correctly
+				var _this;
+				if(this == window){
+					_this = event.srcElement;
+				}else{
+					_this = this;
+				}
 				//Get array of all the buttons, then make them show as inactive
-				buttonAr = this.parentNode.getElementsByTagName('span');
+				buttonAr = _this.parentNode.getElementsByTagName('span');
 				for(var a=0;a<buttonAr.length;a++){
 					base.removeClass(buttonAr[a],'active');
 				}
 				//Make the clicked button the new active one.
-				base.addClass(this,'active');
+				base.addClass(_this,'active');
 				
 				//Update the current image index (store old, so we can still use it temporairly)
 				old = current;
-				current = this.getAttribute('idx');
+				current = _this.getAttribute('idx');
 				//Update tagline with the new title
 				tagLine.innerHTML = images[current].getAttribute('alt');
 				//Fade old image out, fade new image in.
@@ -385,7 +407,7 @@ base.onLoad(function(){
 					tagLine.innerHTML = images[i].getAttribute('alt');
 				}
 				//If a scroll button gets clicked.
-				l.addEventListener('click',scrollChange,false);
+				base.addEvent(l,'click',scrollChange,false);
 			}   
 			//add the tagline to the page
 			n.appendChild(tagLine);
@@ -417,7 +439,7 @@ base.onLoad(function(){
 			}else{
 			
 				//create div to encapsolate content of showHide
-				var inner = base.createNode('div',{class:'inner'});
+				var inner = base.createNode('div',{'class':'inner'});
 				inner.innerHTML = node.innerHTML;
 				//Blank real div
 				node.innerHTML = '';
@@ -441,7 +463,7 @@ base.onLoad(function(){
 			//If a titleBar node doesn't exist, create a new one
 			if(titleBar == null){
 				//Create the new title bar
-				var titleBar = base.createNode('div',{class:'title'});
+				var titleBar = base.createNode('div',{'class':'title'});
 				//Add the correct name
 				if(node.title){
 					titleBar.innerHTML = node.title;
@@ -450,23 +472,23 @@ base.onLoad(function(){
 				}
 			}
 			//attach the onclick
-			titleBar.addEventListener('click',this.showHide,false);
+			base.addEvent(titleBar,'click',this.showHide);
 			
 			base.prepend(titleBar,node);
 			
 			//Create arrow in Canvas (who needs images :p )
-			var arrow = base.createNode('canvas',{class:'arrow', height:'8', width:'18'},titleBar);
+			var arrow = base.createNode('canvas',{'class':'arrow', 'height':'8', 'width':'18'},titleBar);
 			arrow.style.cssFloat = 'right';
-			
-			a = arrow.getContext("2d");
-			a.beginPath();
-			a.moveTo(9, 0)
-			a.lineTo(0, 8);
-			a.lineTo(18, 8);
-			a.lineTo(9, 0);
-			a.fillStyle = "rgb(255,255,255)";
-			a.fill();
-				
+			if(arrow.getContext){
+				a = arrow.getContext("2d");
+				a.beginPath();
+				a.moveTo(9, 0)
+				a.lineTo(0, 8);
+				a.lineTo(18, 8);
+				a.lineTo(9, 0);
+				a.fillStyle = "rgb(255,255,255)";
+				a.fill();
+			}	
 			
 			if(node.getAttribute('itemtype') != 'open'){
 				inner.style.display = 'none';
@@ -492,22 +514,29 @@ base.onLoad(function(){
 				}
 			}
 			//Create Tab Bar
-			var tabBar = base.createNode('ul',{class:'tabBar'});
+			var tabBar = base.createNode('ul',{'class':'tabBar'});
 			//document.createElement('ul');
 			//tabBar.className = 'tabBar';
 			var currentTab=1;
 			
 			var changeTab = function(){
+				//Resolve this becuse IE doesnt set it correctly
+				var _this;
+				if(this == window){
+					_this = event.srcElement;
+				}else{
+					_this = this;
+				}
 				//Unhighlight all the old tabs
-				toptabs = this.parentNode.getElementsByTagName('li');
+				toptabs = _this.parentNode.getElementsByTagName('LI');
 				for(var a=0;a<toptabs.length;a++){
 					base.removeClass(toptabs[a],'active');
 				}
 				//Highlight current tab
-				base.addClass(this,'active');
+				base.addClass(_this,'active');
 				//Hide the old Tab inner, update the currentTab, then show the new one.
 				tabs[currentTab].style.display = 'none';
-				currentTab = parseInt(this.getAttribute('idx'))+1;//ignore our tablist
+				currentTab = parseInt(_this.getAttribute('idx'))+1;//ignore our tablist
 				tabs[currentTab].style.display = 'block';
 			}
 			//For each potental Tab
@@ -543,7 +572,7 @@ base.onLoad(function(){
 				}
 				
 				//Attach action to tab click
-				li.addEventListener('click', changeTab,false);
+				base.addEvent(li,'click', changeTab);
 
 			}
 			base.prepend(tabBar,node);
