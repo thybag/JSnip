@@ -16,10 +16,11 @@ A sample page showing all theses snippets in action can be seen [here](http://us
 
 JSnip has been tested to run in:
 
-* Chrome (full)
-* Firefox (full)
-* IE 9 (CSS3 transitions are unsupported)
+* Chrome
+* Firefox 3.5, 3.6, 4 and 5
+* IE 9 (CSS3 transitions are unsupported, Ajax functions untested for IE8/7)
 * Andorid Browser
+* IOS Browser
 
 
 Licensing

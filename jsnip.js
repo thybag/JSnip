@@ -1,8 +1,8 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.3.3 Alpha
+ * @version 0.3.4 alpha
  * @author: Carl Saggs
- * 
+ * @source https://github.com/thybag/JSnip
  */
 base.onLoad(function(){
 	//List of valid Snippets

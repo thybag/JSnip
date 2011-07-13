@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-
 <html dir="ltr" lang="en-GB">
-
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
 	<title>JSnip Sample</title>
+	<!-- Include JSnip -->
 	<link rel='stylesheet' href='jsnip.css' type='text/css' />
-	<script type="text/javascript" src='base.js'></script> 
-	<script type="text/javascript" src='jsnip.js'></script> 
+	<script type="text/javascript" src='base.min.js'></script> 
+	<script type="text/javascript" src='jsnip.min.js'></script> 
+	<!-- Local styles for Demo -->
 	<style type='text/css'>
 		body{background-color:#EEE;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size:0.9em;}
 		.main { width:900px; margin:0 auto;border:solid 1px #999;}
@@ -23,98 +21,94 @@
 	</style>
 </head>
 <body>
-<div class='main'>
-	<div class='header'>
-		<h1>JSnip Sample page</h1>
-			Version: 0.3 alpha.
-	</div>
-	<div class='body'>
-		<div class='jsnipTabs tabsLeft'>
-			<div>
-				<h2>Welcome</h2>
-				<p><strong>Welcome to the JSnip Sample page.</strong></p>
-				<p>
-					<strong>JSnip</strong> is a lightweight JavaScript based Snipping package, aimed at those who want to add 
-					interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
-				</p>
-				<p>
-				This version of Jsnip contains 3 snippet types.
-				<ul>
-					<li>JsnipTabs</li>
-					<li>JSnipShowHide</li>
-					<li>JsnipImageSwitcher</li>
-				</ul>
-				<p>For basic usage instructions please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
-				<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
-				<p>&nbsp;</p>
-				<p>If you'd like to request a new snippet for the next version feel free to get in <a href="http://userbag.co.uk/contact/">touch</a>.</p>
-			</div>
-			<div title='About'>
-				<p>JSnip is an light weight javascript snippeting package.</p>
-				<p>JSnip can be used in valid HTML5 documents and has been tested to work in: </p>
-				<ul>
-					<li>Chrome (full)</li>
-					<li>Firefox (full)</li>
-					<li>IE 9 (CSS3 transitions are unsupported)</li>
-				</ul>
-				<p>The look and feel of JSnip snippets can be altered easily using CSS.</p>
-				<p>All Jsnip snippets are nestable, so you can place tabs in showHides, then another set of showHides, and tabs inside that if you feel the need.</p>
-			</div>
-			<div>
-				<h2>How does it work?</h2>
-				<p>I'm planning to write up a nice little guide to how JSnip functions behind the scenes.
-				For now though this Tab is just another one of those annoying "coming soon" place holder pages you see.
-				</p>
-				<div class='jsnipShowHide' title='Open me'>
-				<p>This is just here to show that ShowHides are happy to work inside tabs.</p>
-				</div>
-			</div>
-		</div>	
-		<div class='jsnipImageSwitcher float_left' style='width:400px;'>
-			<img src="img/skunk.jpg" alt="A baby skunk!"/>
-			<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
-			<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
-			<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
-			<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
+	<div class='main'>
+		<div class='header'>
+			<h1>JSnip Sample page</h1>
+				Version: 0.3.4 alpha.
 		</div>
-
-		<div class='jsnipShowHide' itemtype='open'>
-			<div class='title'>Open Box</div>
-			<div class='inner'>
-				<p> This box is open</p>
-				<div class='jsnipShowHide' title='Closed box 1'>
-					<p><strong>Lots of text </strong></p>
-					<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-					<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.</p>
-
+		<div class='body'>
+			<div class='jsnipTabs tabsLeft'>
+				<div>
+					<h2>Welcome</h2>
+					<p><strong>Welcome to the JSnip Sample page.</strong></p>
+					<p>
+						<strong>JSnip</strong> is a lightweight JavaScript based Snipping package, aimed at those who want to add 
+						interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
+					</p>
+					<p>
+					This version of Jsnip contains 3 snippet types.
+					<ul>
+						<li>JsnipTabs</li>
+						<li>JSnipShowHide</li>
+						<li>JsnipImageSwitcher</li>
+					</ul>
+					<p>For basic usage instructions please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
+					<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
+					<p>&nbsp;</p>
+					<p>If you'd like to request a new snippet for the next version feel free to get in <a href="http://userbag.co.uk/contact/">touch</a>.</p>
 				</div>
-				<div class='jsnipShowHide' title='Closed box 2'>
-					<p>Only a little bit of text</p>
-
+				<div title='About'>
+					<p>JSnip is an light weight javascript snippeting package.</p>
+					<p>JSnip can be used in valid HTML5 documents and has been tested to work in: </p>
+					<ul>
+						<li>Chrome (full)</li>
+						<li>Firefox 3.5, 3.6, 4 and 5 (full)</li>
+						<li>IE9, IE8, IE7 (most*)</li>
+						<li>Android/IOS</li>
+					</ul>
+					<p>* Limited CSS3 supported. Ajax functions only tested in IE9</p>
+					<p>The look and feel of JSnip snippets can be altered easily using CSS.</p>
+					<p>All Jsnip snippets are nestable, so you can place tabs in showHides, then another set of showHides, and tabs inside that if you feel the need.</p>
 				</div>
-				<div class='jsnipShowHide' title='Closed box 3' >
-					<div class='jsnipImageSwitcher f_right' style='width:400px;'>
-						<img src="img/skunk.jpg" alt="A baby skunk!"/>
-						<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
-						<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
-						<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
-						<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
-					</div>	
-					
-					<p>This box has both a chunk of text and an ImageSwitcher in it.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.
-					Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros.</p><p> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<div>
+					<h2>How does it work?</h2>
+					<p>The JSnip snippets are powered by a simple javascript library called <a href='https://github.com/thybag/JSnip/blob/master/base.js'>base.js</a> which i wrote along side the snippets themselves.</p>
+					<p>Along with a set of shorthand functions, helper methods (such as prepend,hasclass, addclass etc) JSnip also offers basic
+					set of animtions, fade's and slides as well as a nice little AJAX request wrapper.</p>
+					<p>A full commented version of base.js should be packaged along side the minified version included in this document</p>
+					<div class='jsnipShowHide' title='Open me'>
+						<p>This is just here to show that ShowHides are happy to work inside tabs.</p>
+					</div>
+				</div>
+			</div>	
+			<div class='jsnipImageSwitcher float_left' style='width:400px;'>
+				<img src="img/skunk.jpg" alt="A baby skunk!"/>
+				<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
+				<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
+				<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
+				<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
+			</div>
+			<div class='jsnipShowHide' itemtype='open'>
+				<div class='title'>Open Box</div>
+				<div class='inner'>
+					<p> This box is open</p>
+					<div class='jsnipShowHide' title='Closed box 1'>
+						<p><strong>Lots of text </strong></p>
+						<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+						<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.</p>
 
-					
+					</div>
+					<div class='jsnipShowHide' title='Closed box 2'>
+						<p>Only a little bit of text</p>
+
+					</div>
+					<div class='jsnipShowHide' title='Closed box 3' >
+						<div class='jsnipImageSwitcher f_right' style='width:400px;'>
+							<img src="img/skunk.jpg" alt="A baby skunk!"/>
+							<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
+							<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
+							<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
+							<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
+						</div>	
+						<p>This box has both a chunk of text and an ImageSwitcher in it.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.
+						Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros.</p><p> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+					</div>
 				</div>
 			</div>
+			<div style='clear:both;'></div>
 		</div>
-
-		<div style='clear:both;'></div>
-		
-
 	</div>
-</div>
 </body>
 </html>
