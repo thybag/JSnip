@@ -132,8 +132,12 @@
 		 * @param node DOM node
 		 * @param callback function (optional)
 		 */
-		this.fadeIn = function(node, callback){
-			var incr = 0.22;
+		this.fadeIn = function(node, callback,speed){
+		
+			//Calcuate animation speed
+			if(!speed){speed=275;}
+			var incr  = 1/(speed/60); //Speed
+			
 			var cur_op = 0;
 			node.style.opacity = 0;
 			node.style.filter = 'alpha(opacity=0)';
@@ -159,8 +163,12 @@
 		 * @param node DOM node
 		 * @param callback function (optional)
 		 */
-		this.fadeOut = function(node,callback){
-			var incr = 0.22;
+		this.fadeOut = function(node,callback,speed){
+
+			//Calcuate animation speed
+			if(!speed){speed=275;}
+			var incr  = 1/(speed/60); //Speed
+		
 			var cur_op = 1;
 			node.style.opacity = 1;
 			//IE
@@ -252,6 +260,36 @@
 					if(callback !=null)	callback();
 				}
 			}, 20);
+			
+		}
+		/**
+		 * scrollTo
+		 * Scroll to a given position in a node. (Y axis only)
+		 * @param node DOM node
+		 * @param distance from top pixels
+		 * @param callback function (optional)
+		 */
+		
+		this.scrollTo = function(node, position, callback){
+			//Get current scroll position
+			toScroll = node.scrollY || node.pageYOffset;
+			//Catch IE7 if node is window
+			if(isNaN(toScroll) && node==window){toScroll=document.documentElement.scrollTop;}
+			//Work out timeings
+			time=8;
+			inc = toScroll/time;
+			//Animate
+			var interval = setInterval(function(){
+				toScroll -=inc;
+				;
+				node.scrollTo(0,toScroll);
+				//On completion call callback if avaiable
+				if(toScroll <= 0 || isNaN(toScroll)){
+					node.scrollTo(0,0);
+					clearInterval(interval);
+					if(callback !=null)	callback();
+				}
+			},50);
 			
 		}
 	}

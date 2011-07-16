@@ -6,7 +6,7 @@
  */
 base.onLoad(function(){
 	//List of valid Snippets
-	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs');
+	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs','jsnipScrollToTop');
 	/**
 	 * parsePage
 	 * Called once the page is loaded, this will check through every DIV element in the page
@@ -39,6 +39,8 @@ base.onLoad(function(){
 		this.jsnipImageSwitcher = function(node){
 			var images = node.getElementsByTagName('img');//Get images contained
 			var current = 0;
+			var animating = false;
+			
 			//Create control bar DOM object
 			var n = base.createNode('div',{'class':'bar'},node);
 			//Create tagline
@@ -52,6 +54,10 @@ base.onLoad(function(){
 				}else{
 					_this = this;
 				}
+				//Check this isnt the same image we are already displaying
+				if(_this.getAttribute('idx') == current) return;
+				if(animating) return;
+				
 				//Get array of all the buttons, then make them show as inactive
 				buttonAr = _this.parentNode.getElementsByTagName('span');
 				for(var a=0;a<buttonAr.length;a++){
@@ -65,10 +71,23 @@ base.onLoad(function(){
 				current = _this.getAttribute('idx');
 				//Update tagline with the new title
 				tagLine.innerHTML = images[current].getAttribute('alt');
-				//Fade old image out, fade new image in.
-				base.animate.fadeOut(images[old],function(){
-					base.animate.fadeIn(images[current]);
-				});				
+				//Get animation type
+				if(node.getAttribute('itemprop') == 'crossFade'){
+					animating=true;
+					//Fiddle positioning so images site on top of each other
+					if(old<current){underImg = old;}else{underImg = current;}
+					images[underImg].style.position ='absolute';
+					//Run fades at the same time (ish)
+					base.animate.fadeOut(images[old],function(){images[underImg].style.position ='';},650);
+					base.animate.fadeIn(images[current],function(){animating=false;},700);
+		
+				}else{
+					animating=true;
+					//Fade old image out, fade new image in.
+					base.animate.fadeOut(images[old],function(){
+						base.animate.fadeIn(images[current],function(){animating=false;});
+					});			
+				}
 			}
 			//Loop threw images to actually set the snippet up.
 			for(var i=0;i<images.length;i++){
@@ -89,7 +108,7 @@ base.onLoad(function(){
 				base.addEvent(l,'click',scrollChange,false);
 			}   
 			//add the tagline to the page
-			n.appendChild(tagLine);
+			base.prepend(tagLine,n);//n.appendChild(tagLine);
 		}
 		
 		/**
@@ -256,8 +275,24 @@ base.onLoad(function(){
 			}
 			base.prepend(tabBar,node);
 		}
+		/**
+		 * ScrollToTop
+		 * A simple snippet designed for use as a quick scroll to top button
+		 */
+		this.jsnipScrollToTop = function(node){
+			//Attach to onClick of this node
+			base.addEvent(node,'click', function(){
+				
+				//Use scrollTo to animate scroll
+				base.animate.scrollTo(window, 0 ,function(){
+					//Nothing
+				});
+			});	
+		}
+		
+		
+		
 	}
-	
 	//Run the parser
 	parsePage();
  });

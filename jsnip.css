@@ -10,10 +10,14 @@
 	text-align:right;
 	background-color:#333;
 	height:25px;
-	margin-top:-30px;
+
 	opacity:0.9;
 	filter:alpha(opacity=90);
 	padding-right:10px;
+	z-index: 100;
+	position:relative;
+	bottom:30px;
+	margin-bottom:-30px;
 }
 .jsnipImageSwitcher .bar span {
 	font-family:"Times New Roman", Times, serif;
@@ -21,8 +25,7 @@
 	font-size:60px;
 	text-decoration:none;
 	color:#bbb;
-	margin-top:-40px;
-	 position:relative;
+	position:relative;
 	bottom:40px;
 	cursor:pointer;
 }
@@ -35,11 +38,13 @@
 	height:15px;
 	white-space: nowrap;
 	overflow:hidden;
-	
 	text-overflow: ellipsis;
 }
 .jsnipImageSwitcher .bar span.active{
 	color:#fff;
+}
+.jsnipImageSwitcher a, .jsnipImageSwitcher a img{
+	border:0;
 }
 /* Show Hide */
 .jsnipShowHide {
