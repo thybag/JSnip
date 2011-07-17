@@ -5,12 +5,12 @@
 	<title>JSnip Sample</title>
 	<!-- Include JSnip -->
 	<link rel='stylesheet' href='jsnip.css' type='text/css' />
-	<script type="text/javascript" src='base.js'></script> 
-	<script type="text/javascript" src='jsnip.js'></script> 
+	<script type="text/javascript" src='base.min.js'></script> 
+	<script type="text/javascript" src='jsnip.min.js'></script> 
 	<!-- Local styles for Demo -->
 	<style type='text/css'>
 		body{background-color:#EEE;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size:0.9em;}
-		.main { width:900px; margin:0 auto;border:solid 1px #999;}
+		.main { width:900px; margin:0 auto;border:solid 1px #999;margin-bottom:80px;}
 		.header {background-color:#222;color:#fff;padding:8px; }
 		.header h1 {margin:5px 0;}
 		.body {padding:5px;background-color:#fff;}
@@ -18,13 +18,17 @@
 		.float_left {float:left;margin:8px;margin-top:0;} 
 		.display_center {margin: 4px auto;}
 		.f_right {float:right; margin:4px;}
+		.text {padding:4px;}
+		.buttonish {border:solid 1px; padding:4px; background-color:#F9F9F9;}
+		.buttonish a{color:#000;}
+		
 	</style>
 </head>
 <body>
 	<div class='main'>
 		<div class='header'>
 			<h1>JSnip Sample page</h1>
-				Version: 0.3.4 alpha.
+				Version: 0.4 alpha.
 		</div>
 		<div class='body'>
 			<div class='jsnipTabs tabsLeft'>
@@ -36,13 +40,14 @@
 						interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
 					</p>
 					<p>
-					This version of Jsnip contains 3 snippet types.
+					This version of Jsnip contains 5 snippet types.
 					<ul>
 						<li>JsnipTabs</li>
 						<li>JSnipShowHide</li>
 						<li>JsnipImageSwitcher</li>
+						<li>JsnipScrollToTop and JsnipScrollToAnchor</li>
 					</ul>
-					<p>For basic usage instructions please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
+					<p>For basic usage instruction's please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
 					<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
 					<p>&nbsp;</p>
 					<p>If you'd like to request a new snippet for the next version feel free to get in <a href="http://userbag.co.uk/contact/">touch</a>.</p>
@@ -64,7 +69,7 @@
 					<h2>How does it work?</h2>
 					<p>The JSnip snippets are powered by a simple javascript library called <a href='https://github.com/thybag/JSnip/blob/master/base.js'>base.js</a> which i wrote along side the snippets themselves.</p>
 					<p>Along with a set of shorthand functions, helper methods (such as prepend,hasclass, addclass etc) JSnip also offers basic
-					set of animtions, fade's and slides as well as a nice little AJAX request wrapper.</p>
+					set of animtions, fade's, scrolls and slides as well as a nice little AJAX request wrapper.</p>
 					<p>A full commented version of base.js should be packaged along side the minified version included in this document</p>
 					<div class='jsnipShowHide' title='Open me'>
 						<p>This is just here to show that ShowHides are happy to work inside tabs.</p>
@@ -107,7 +112,40 @@
 					</div>
 				</div>
 			</div>
-			<div class='jsnipScrollToTop'>Back to top</div>
+			<div class='text'>
+				<div class='buttonish'>
+					Scroll to: <a href='#Topic1' class='jsnipScrollToAnchor'> Topic 1</a> <a href='#Topic2' class='jsnipScrollToAnchor'>Topic 2</a> <a href='#Topic3' class='jsnipScrollToAnchor'>Topic 3</a> <a href='#Topic4' class='jsnipScrollToAnchor'> Topic 4</a>
+				</div>
+				<a id='Topic1'></a>
+				<h3>Topic title 1</h3>
+				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				<p>Nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<a id='Topic2'></a>
+				<h3>Topic title 2</h3>
+				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<p>Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<a id='Topic3'></a>
+				<h3>Topic title 3</h3>
+				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.</p>
+				<p>Aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				
+				<a id='Topic4'></a>
+				<h3>Topic title 4</h3>
+				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<p>Aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
+				<p>Suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+			</div>
+			
+			
+			
+			
+			
+			<div class='jsnipScrollToTop buttonish'>Back to top</div>
 			<div style='clear:both;'></div>
 		</div>
 	</div>

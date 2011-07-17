@@ -131,6 +131,11 @@
 	padding-bottom:4px;
 }
 .jsnipTabs .tabBar li.active{ position:relative;top:-2px;padding-bottom:4px; background-color:#444; color:#fff;}
+/* Scroll to top */
+
+.jsnipScrollToTop {
+	cursor:pointer;
+}
 
 
 

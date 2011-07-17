@@ -1,7 +1,7 @@
  /**
  * Base provides a set of simple but often useful javaScript functions.
  * @author Carl Saggs
- * @version 0.5 alpha
+ * @version 0.5.3 alpha
  * @source https://github.com/thybag/JSnip
  *
  * @module Base.animation for animation methods
@@ -272,20 +272,33 @@
 		
 		this.scrollTo = function(node, position, callback){
 			//Get current scroll position
-			toScroll = node.scrollY || node.pageYOffset;
+			var toScroll = node.scrollY || node.pageYOffset;
+			var direction = 'up';
 			//Catch IE7 if node is window
 			if(isNaN(toScroll) && node==window){toScroll=document.documentElement.scrollTop;}
+			//get Scroll Distance needed
+			toScroll = toScroll-position;
+			//Figure out direction and invert distance to scroll for downwards direction
+			if(toScroll < 0){toScroll = -toScroll;  direction ='down';}
+			
 			//Work out timeings
-			time=8;
+			time=15;
 			inc = toScroll/time;
+			
 			//Animate
 			var interval = setInterval(function(){
+				//Incriment counter
 				toScroll -=inc;
-				;
-				node.scrollTo(0,toScroll);
-				//On completion call callback if avaiable
+				
+				//Depending on direction we are scrolling work out next position
+				if(direction=='up'){
+					node.scrollTo(0,toScroll+position);
+				}else{
+					node.scrollTo(0,(-toScroll)+position);
+				}
+				//If we have no more distance to scroll, run completion conditions
 				if(toScroll <= 0 || isNaN(toScroll)){
-					node.scrollTo(0,0);
+					node.scrollTo(0,position);
 					clearInterval(interval);
 					if(callback !=null)	callback();
 				}
@@ -321,7 +334,34 @@
 
 			return node;
 	}
+	/**
+	 * Get pixel position of a DOM Element relative
+	 * to the document itself.
+	 * @param node
+	 * @return x,y coords object.
+	 */
+	this.getCoord = function(node){
 	
+		var my_x = node.offsetLeft;
+		var my_y = node.offsetTop ;
+		
+		//Ugly hack to stop IE7 getting offset width and heigh added (since it seems to get it wrong)
+		//IE8 gets included, but suffers no noticable side effects
+		if(!(document.all && typeof document.addEventListener != 'function')){
+			my_x += node.offsetWidth; 
+			my_y += node.offsetHeight;
+		}
+		//If it has offsetParent, add em up to get the objects full position.
+		if (node.offsetParent) {
+			temp = node;
+			while(temp = temp.offsetParent){
+				my_x +=temp.offsetLeft;
+				my_y +=temp.offsetTop;
+			}
+		}
+		return {x: my_x, y: my_y};
+	
+	}
 	/**
 	* Get nodes using CSS selectors.
 	* Uses Sizzle!
@@ -340,7 +380,7 @@
 		return results;
 	}
 	
-	//Short Hand Functions
+	//Short Hand Function
 	this.byId = function(id){
 		return document.getElementById(id);
 	}
@@ -368,6 +408,17 @@
 				obj.attachEvent('on'+event, callback);
 		}
 	}
+	/**
+	 * Base.log
+	 * Quick function to allow snippets to throw warnings. 
+	 * Will only work in browsers that include a console.
+	 *
+	 */
+	this.log = function(msg){
+		if(console) if(console.log) console.log('Warning: '+msg);
+	}
+	
+	
 	//Add base to global scope
 	window.base = this;
 })();

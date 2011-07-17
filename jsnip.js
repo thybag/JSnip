@@ -1,12 +1,12 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.3.4 alpha
+ * @version 0.4 alpha
  * @author: Carl Saggs
  * @source https://github.com/thybag/JSnip
  */
 base.onLoad(function(){
 	//List of valid Snippets
-	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs','jsnipScrollToTop');
+	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs','jsnipScrollToTop', 'jsnipScrollToAnchor');
 	/**
 	 * parsePage
 	 * Called once the page is loaded, this will check through every DIV element in the page
@@ -14,7 +14,7 @@ base.onLoad(function(){
 	 */
 	function parsePage(){
 		//Get all nodes that could be snippets
-		var nodes = document.getElementsByTagName('div');
+		var nodes = document.getElementsByTagName('*');
 		//Check all of them
 		for(var s=0;s<nodes.length;s++){
 			//For each possible snippet
@@ -276,17 +276,56 @@ base.onLoad(function(){
 			base.prepend(tabBar,node);
 		}
 		/**
+		 * ScrollToAnchor
+		 * Scroll to an Anchor in the page
+		 */
+		this.jsnipScrollToAnchor = function(node){
+			//Extract Id from # (IE7 doesnt do this for us with getAttribute)
+			hash = node.getAttribute("href");
+			if(hash.indexOf('#') == -1){
+				//no # = invalid link
+				base.log("href is not pointed at an anchor."); 
+				return;
+			}else{
+				//Get hash itself
+				hash = hash.substr(hash.indexOf('#')+1);
+			}
+			//Grab node itself
+			var nodeRef = base.byId(hash);
+			
+			//Check node was found
+			if(nodeRef == null) {
+				//warning
+				base.log("Node with ID: "+ node.getAttribute("href")+" could be found"); 
+				return;
+			}
+			//Attach to onClick of this node
+			base.addEvent(node, 'click', function(e){
+				//prevent normal action
+				if(e.preventDefault){e.preventDefault();}else{e.returnValue = false;}
+				
+				//Get location of the #Node
+				coord = base.getCoord(nodeRef);
+				//Use scrollTo to animate scroll
+				base.animate.scrollTo(window, coord.y ,function(){
+					//Nothing
+				});
+			});	
+		
+		}
+		/**
 		 * ScrollToTop
 		 * A simple snippet designed for use as a quick scroll to top button
 		 */
 		this.jsnipScrollToTop = function(node){
 			//Attach to onClick of this node
-			base.addEvent(node,'click', function(){
-				
+			base.addEvent(node,'click', function(e){
 				//Use scrollTo to animate scroll
 				base.animate.scrollTo(window, 0 ,function(){
 					//Nothing
 				});
+				//prevent normal action
+				if(e.preventDefault){e.preventDefault();}else{e.returnValue = false;}
 			});	
 		}
 		

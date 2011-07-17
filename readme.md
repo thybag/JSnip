@@ -7,8 +7,9 @@ elements to their webpages but lack the necessary JavaScript knowledge to do so.
 This version of JSnip contains three snippets types:
 
 * JsnipTabs
-* JSnipShowHide
+* JsnipShowHide
 * JsnipImageSwitcher
+* JsnipScrollToTop and JsnipScrollToAnchor
 
 A sample page showing all theses snippets in action can be seen [here](http://userbag.co.uk/demo/jsnip/sample.htm).
 
@@ -21,6 +22,17 @@ JSnip has been tested to run in:
 * IE 9 (CSS3 transitions are unsupported, Ajax functions untested for IE8/7)
 * Andorid Browser
 * IOS Browser
+
+### Change Log
+
+#### 1.4
+* Added support for IE7, IE8 and IOS
+* Multiple bug fix's
+* Two new snippets (JsnipScrollToAnchor and JsnipScrollToTop)
+* Scroll animation type added to base
+* Cross fade effect added to Image Switcher
+* getCoords method added to base
+* Jsnip now works on any element type (not just divs)
 
 
 Licensing
@@ -57,7 +69,8 @@ Quick start guide.
 ---------------------
 Please see [this article](http://userbag.co.uk/development/introducing-jsnip/) for a more complete/readable guide.
 
-1. Upload the jsnip.js and Jsnip.css on to your web server and import them in your documents header. 
+1. Upload jsnip.min.js, base.min.js and Jsnip.css on to your web server and import them in your documents header. 
+   Ensure base is imported before jsnip.
 
 2. To add a snippet, simply create a DIV with the relevant class name.
 
@@ -110,6 +123,9 @@ Requires class: *jsnipImageSwitcher*
 Must contains a number of image tags.   
 The alt attribute of each image is used as the caption.
 
+Other Attributes:     
+itemprop: crossFade (expermental transition type)
+
 Example:
 
     <div class="jsnipImageSwitcher">
@@ -117,3 +133,29 @@ Example:
         <img src="/demo/img/otter.jpg" alt="An otter" />
         <img src="/demo/img/bunny.jpg" alt="A Bunny Rabbit" />
     </div>
+	
+**Scroll to top**
+
+Requires class: *JsnipScrollToTop*
+
+Will add event to node that scrolls browser back to top of the page.
+
+Example:
+
+    <div class="jsnipScrollToTop">Top of Page</div>
+	
+	
+**Scroll to Anchor**	
+	
+Requires class: *JsnipScrollToAnchor*
+
+Will scroll browser window to the position of any Node with an ID matching that specified
+in the links href
+
+Example:
+
+      <a href='#AnchorWithID' class="jsnipScrollToAnchor">Go to "AnchorWithID"</a>
+	
+	
+	
+	
