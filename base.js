@@ -1,7 +1,7 @@
  /**
  * Base provides a set of simple but often useful javaScript functions.
  * @author Carl Saggs
- * @version 0.5.7 alpha
+ * @version 0.5.8 alpha
  * @source https://github.com/thybag/JSnip
  *
  * @module Base.animation for animation methods
@@ -397,7 +397,7 @@
 	 */
 	this.getCenterCoord = function(){
 		//Work out Y offset;
-		yoffset = window.pageYOffset || document.body.scrollTop;
+		yoffset = window.pageYOffset || document.documentElement.scrollTop;
 		
 		return {
 			x: (this.getBrowserWidth()/2),
