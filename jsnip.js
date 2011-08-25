@@ -1,6 +1,6 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.5 alpha
+ * @version 0.5.1 alpha
  * @author: Carl Saggs
  * @source https://github.com/thybag/JSnip
  */
@@ -365,8 +365,9 @@ base.onLoad(function(){
 				//Get Center
 				var cent_x =base.getCenterCoord().x;
 				var cent_y =base.getCenterCoord().y;
+				
 				//Create Overlay (dark background)
-				var overlay = base.createNode('div', {}, node.parentNode);
+				var overlay = base.createNode('div', {}, document.body);
 					overlay.style.position = 'absolute';
 					overlay.style.top = '0px';
 					overlay.style.left = '0px';
@@ -376,81 +377,121 @@ base.onLoad(function(){
 					overlay.style.filter = 'alpha(opacity=70)';
 					overlay.style.width = '100%';
 					overlay.style.height = base.getDocumentSize().height+'px';
-				//Create Lightbox
-				var box = base.createNode('div', {'class':'jsniplightboxWindow'}, node.parentNode);
-					box.style.width = box_w+'px';
-					box.style.height = box_h+'px';
-					box.style.left = cent_x-(box_w/2)+'px'
-					box.style.top = cent_y-(box_h/2)+'px'
-				//Create InfoBar
-				var bar = base.createNode('div',{'class':'infoBar'});
-					bar.innerHTML = node.getAttribute('alt');
-				//Create Close Button
-				var close = base.createNode('div',{'class':'close'});
+				//Set up loading gif
+				var lding = base.createNode('div', {'class':'loading_img'}, document.body);
+				lding.style.left = cent_x-15+'px';
+				lding.style.top = cent_y-15+'px';
+				// Create Image Node
+				var img = base.createNode('img',{});
+				//This runs when the image is loaded.
+				base.addEvent(img, 'load', function(e){
+					base.remove(lding);
+					//Create Lightbox
+					var box = base.createNode('div', {'class':'jsniplightboxWindow'}, document.body);
+						box.style.width = box_w+'px';
+						box.style.height = box_h+'px';
+						box.style.left = cent_x-(box_w/2)+'px'
+						box.style.top = cent_y-(box_h/2)+'px'
+					//Create InfoBar
+					var bar = base.createNode('div',{'class':'infoBar'});
+					
+					if(node.hasAttribute){
+						if(node.hasAttribute('alt')) bar.innerHTML = node.getAttribute('alt');
+					}else{
+						//Just assume it does
+						 bar.innerHTML = node.getAttribute('alt');
+					}
+					//Create Close Button
+					var close = base.createNode('div',{'class':'close'});
 					close.innerHTML = '[close]';
 					base.prepend(close, bar);
-				//Create Image (grab width and height while here)
-				var img = base.createNode('img', {'src':node.src});
+				
+					//Get Image width/height + add styles
 					i_width  = img.width;
 					i_height = img.height;
+
+					//Ensure width of image will allow it to fit on page (Image size, or if thats to big, window size)
+					if(base.getBrowserWidth()-(border_w*2) < i_width ){
+						//If not use page's max as width
+						oldwidth = i_width;
+						i_width = base.getBrowserWidth()-(border_w*2);
+						//Scale Height accordingly
+						i_height = i_height*(i_width/oldwidth);
+					}
+					if(base.getBrowserHeight()-(border_t*2) < i_height) {
+						//If to long use page height
+						oldheight = i_height;
+						i_height = base.getBrowserHeight()-(border_t*2);
+						//Scale Width accordingly
+						i_width = i_width*(i_height/oldheight);
+					}
+					//Compensate for margin of error
+					i_width = i_width*0.9;
+					i_height = i_height*0.9;
+					//Add image stylings
 					img.style.height='auto';
 					img.className = 'lightIMG';
 					box.appendChild(img);
-				//Work out size of fully expanded image (Image size, or if thats to big, window size)
-				if(base.getBrowserWidth()-(border_w*2) < i_width ) i_width = base.getBrowserWidth()-(border_w*2);
-				if(base.getBrowserHeight()-(border_t*2) < i_height) i_height = base.getBrowserHeight()-(border_t*2);
-			
-				//Work out incriments based on time
-				inc_w = i_width/time;
-				inc_h = i_height/time;
 				
-				
-				//Begin Animation
-				var interval = setInterval(function(){
-					//Incriment counter
-					time--;
-					//Update box width & height
-					box_w = box_w + inc_w;
-					box_h = box_h + inc_h;
-					//Apply style changes
-					box.style.width = box_w+'px';
-					box.style.height = box_h+'px';
-					box.style.left = cent_x-(box_w/2)+'px'
-					box.style.top = cent_y-(box_h/2)+'px'
-					img.style.width = box_w-10+'px';//compensate for image pad
+					//Work out incriments based on time
+					inc_w = i_width/time;
+					inc_h = i_height/time;
 					
-					//If animation is complete
-					if(time == 0 || time < 0){
-						//Set box styles to full positions (ensure it was completed)
-						box.style.width = i_width+'px';
-						box.style.height = i_height+18+'px';
-						box.style.left = cent_x-(i_width/2)+'px';
-						box.style.top = cent_y-(i_height/2)+'px';
-						//Add InfoBar to page
-						img.style.marginBottom ='0px';
-						box.appendChild(bar);	
-						bar.style.paddingTop ='2px';
-						//box.style.height= '25px';
-						//Fit image correctly
-						img.style.width = i_width-12+'px';
+					//Begin Animation
+					var interval = setInterval(function(){
+						//Incriment counter
+						time--;
+						//Update box width & height
+						box_w = box_w + inc_w;
+						box_h = box_h + inc_h;
+						//Apply style changes
+						box.style.width = box_w+'px';
+						box.style.height = box_h+'px';
+						box.style.left = cent_x-(box_w/2)+'px'
+						box.style.top = cent_y-(box_h/2)+'px'
+						img.style.width = box_w-10+'px';//compensate for image pad
 						
-						//End animation
-						clearInterval(interval);
-					}
-				},60);
-				//Add onClick events to allow closing of window.
-				base.addEvent(overlay,'click', function(e){
-				    base.remove(overlay);
-				    base.remove(box);
+						//If animation is complete
+						if(time == 0 || time < 0){
+							//Set box styles to full positions (ensure it was completed)
+							box.style.width = i_width+'px';
+							box.style.height = i_height+18+'px';
+							box.style.left = cent_x-(i_width/2)+'px';
+							box.style.top = cent_y-(i_height/2)+'px';
+							//Add InfoBar to page
+							img.style.marginBottom ='0px';
+							box.appendChild(bar);	
+							bar.style.paddingTop ='2px';
+							//Fit image correctly
+							img.style.width = i_width-12+'px';
+							
+							//End animation
+							clearInterval(interval);
+						}
+					},60);
+					//Add onClick events to allow closing of window.
+					base.addEvent(overlay,'click', function(e){
+						base.remove(overlay);
+						base.remove(box);
+					});
+					base.addEvent(close,'click', function(e){
+						base.remove(overlay);
+						base.remove(box);
+					});
+					base.addEvent(img,'click', function(e){
+						base.remove(overlay);
+						base.remove(box);
+					});
 				});
-				base.addEvent(close,'click', function(e){
-				    base.remove(overlay);
-				    base.remove(box);
-				});
-				base.addEvent(img,'click', function(e){
-				    base.remove(overlay);
-				    base.remove(box);
-				});
+				
+				//Find out if large image is avaible
+				if(node.getAttribute('itemprop') != null && node.getAttribute('itemprop').length > 1){
+					//User larger image if its specified in prop
+					img.src = node.getAttribute('itemprop');
+				}else{
+					//Else use current image src
+					img.src = node.src;
+				}
 			});	
 		}
 	

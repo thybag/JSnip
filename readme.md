@@ -26,6 +26,13 @@ JSnip has been tested to run in:
 
 ### Change Log
 
+#### 1.5.1
+* Signifcantly improve scaling system for lightBox (now actually takes height in to account)
+* Loading image added + checks to ensure image is loaded before grabbing width/height
+* Doesn't just assume alt text exists (checks)
+* Add ability to specifiy larger image useing itemprop (thumb can connect to big image for lightbox)
+* Base now correctly gets browser center location in IE8/7
+
 #### 1.5
 * Fixed firefox bug with ImageSwitcher
 * Added Lightbox Snippet
@@ -170,6 +177,9 @@ Example:
 **LightBox Effect**	
 	
 Requires class: *jsnipLightBox *
+
+Other Attributes:
+itemprop: You can use this value specifiy the URL to a larger version of the image for use with the lightbox
 
 Apply the jsnipLightBox class to an image, to making clicking on it cause the image to open in a LightBox
 

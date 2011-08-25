@@ -167,6 +167,16 @@
 	float:right;
 }
 
+/*General Images */
+
+.loading_img{
+	width:30px;height:30px;background-color:#fff;
+	background-image: url('img/loading.gif');
+	background-repeat:no-repeat;
+	background-position:center;
+	position:absolute;
+}
+
 
 
 
