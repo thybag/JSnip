@@ -18,7 +18,9 @@
 	position:relative;
 	bottom:30px;
 	margin-bottom:-30px;
+	
 }
+.jsnipImageSwitcher img {width:100%;}
 .jsnipImageSwitcher .bar span {
 	font-family:"Times New Roman", Times, serif;
 	margin:0;
@@ -46,6 +48,7 @@
 .jsnipImageSwitcher a, .jsnipImageSwitcher a img{
 	border:0;
 }
+
 /* Show Hide */
 .jsnipShowHide {
 			margin:4px 2px;
@@ -85,6 +88,7 @@
 	-webkit-transition: -webkit-transform 0.2s ease-in;
 	-moz-transition: -moz-transform 0.2s ease-in;
 } 
+
 /* Tabs */
 .jsnipTabs {margin:2px; color:#000;}
 .jsnipTabs .tabContent {
@@ -131,13 +135,37 @@
 	padding-bottom:4px;
 }
 .jsnipTabs .tabBar li.active{ position:relative;top:-2px;padding-bottom:4px; background-color:#444; color:#fff;}
-/* Scroll to top */
 
+/* Scroll to top */
 .jsnipScrollToTop {
 	cursor:pointer;
 }
 
-
+/* Light box */
+.jsnipLightBox {
+	cursor:pointer;
+}
+.jsniplightboxWindow {
+	background-color:#fff;
+	position:absolute;
+	z-index:10000;
+	border: solid #222 1px;
+	overflow:hidden;
+	cursor:pointer;
+	padding-bottom:5px;
+}
+.jsniplightboxWindow .lightIMG {
+	margin:5px;
+	overflow:hidden;
+	border:solid 1px #000;
+}
+.jsniplightboxWindow .infoBar {
+	text-align:left;
+	padding:4px;
+}
+.jsniplightboxWindow  .infoBar .close{
+	float:right;
+}
 
 
 

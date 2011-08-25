@@ -1,12 +1,19 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.4 alpha
+ * @version 0.5 alpha
  * @author: Carl Saggs
  * @source https://github.com/thybag/JSnip
  */
 base.onLoad(function(){
 	//List of valid Snippets
-	var validSnippets = Array('jsnipImageSwitcher','jsnipShowHide','jsnipTabs','jsnipScrollToTop', 'jsnipScrollToAnchor');
+	var validSnippets = Array(
+		'jsnipImageSwitcher',
+		'jsnipShowHide',
+		'jsnipTabs',
+		'jsnipScrollToTop',
+		'jsnipScrollToAnchor',
+		'jsnipLightBox'
+	);
 	/**
 	 * parsePage
 	 * Called once the page is loaded, this will check through every DIV element in the page
@@ -46,6 +53,13 @@ base.onLoad(function(){
 			//Create tagline
 			var tagLine = base.createNode('div',{'class':'tagLine'});
 			
+			//Firefox Fix (IE9 and Chrome are happy, yet firefox isn't - weird?)
+			if(navigator.userAgent && (navigator.userAgent.indexOf('Firefox') != -1)){
+				n.style.marginTop= '-30px';
+				n.style.marginBottom= '';
+				n.style.position = 'static';
+			}
+			
 			var scrollChange = function(evt) {
 				//Resolve this becuse IE doesnt set it correctly
 				var _this;
@@ -74,12 +88,15 @@ base.onLoad(function(){
 				//Get animation type
 				if(node.getAttribute('itemprop') == 'crossFade'){
 					animating=true;
+					
 					//Fiddle positioning so images site on top of each other
 					if(old<current){underImg = old;}else{underImg = current;}
 					images[underImg].style.position ='absolute';
+					images[underImg].style.width = node.style.width;
+					
 					//Run fades at the same time (ish)
-					base.animate.fadeOut(images[old],function(){images[underImg].style.position ='';},650);
-					base.animate.fadeIn(images[current],function(){animating=false;},700);
+					base.animate.fadeOut(images[old],function(){images[underImg].style.position ='';images[underImg].style.width = '';},660);
+					base.animate.fadeIn(images[current],function(){animating=false;},60);
 		
 				}else{
 					animating=true;
@@ -328,9 +345,115 @@ base.onLoad(function(){
 				if(e.preventDefault){e.preventDefault();}else{e.returnValue = false;}
 			});	
 		}
-		
-		
-		
+		/**
+		 * Lightbox
+		 * Add a lightbox effect to an image.
+		 *
+		 * @todo Add scroll through other lightboxable images maybe?
+		 */
+		this.jsnipLightBox = function(node){
+			//Attach to onClick of this node
+			base.addEvent(node,'click', function(e){
+			
+				//Define Settings to use in function
+				var border_t = 10,
+				border_w = 30,
+				box_w = 20,
+				box_h = 20;
+				//Set Animation time
+				var time = 8;
+				//Get Center
+				var cent_x =base.getCenterCoord().x;
+				var cent_y =base.getCenterCoord().y;
+				//Create Overlay (dark background)
+				var overlay = base.createNode('div', {}, node.parentNode);
+					overlay.style.position = 'absolute';
+					overlay.style.top = '0px';
+					overlay.style.left = '0px';
+					overlay.style.zindex = 100;
+					overlay.style.background = '#000';
+					overlay.style.opacity = 0.7;
+					overlay.style.filter = 'alpha(opacity=70)';
+					overlay.style.width = '100%';
+					overlay.style.height = base.getDocumentSize().height+'px';
+				//Create Lightbox
+				var box = base.createNode('div', {'class':'jsniplightboxWindow'}, node.parentNode);
+					box.style.width = box_w+'px';
+					box.style.height = box_h+'px';
+					box.style.left = cent_x-(box_w/2)+'px'
+					box.style.top = cent_y-(box_h/2)+'px'
+				//Create InfoBar
+				var bar = base.createNode('div',{'class':'infoBar'});
+					bar.innerHTML = node.getAttribute('alt');
+				//Create Close Button
+				var close = base.createNode('div',{'class':'close'});
+					close.innerHTML = '[close]';
+					base.prepend(close, bar);
+				//Create Image (grab width and height while here)
+				var img = base.createNode('img', {'src':node.src});
+					i_width  = img.width;
+					i_height = img.height;
+					img.style.height='auto';
+					img.className = 'lightIMG';
+					box.appendChild(img);
+				//Work out size of fully expanded image (Image size, or if thats to big, window size)
+				if(base.getBrowserWidth()-(border_w*2) < i_width ) i_width = base.getBrowserWidth()-(border_w*2);
+				if(base.getBrowserHeight()-(border_t*2) < i_height) i_height = base.getBrowserHeight()-(border_t*2);
+			
+				//Work out incriments based on time
+				inc_w = i_width/time;
+				inc_h = i_height/time;
+				
+				
+				//Begin Animation
+				var interval = setInterval(function(){
+					//Incriment counter
+					time--;
+					//Update box width & height
+					box_w = box_w + inc_w;
+					box_h = box_h + inc_h;
+					//Apply style changes
+					box.style.width = box_w+'px';
+					box.style.height = box_h+'px';
+					box.style.left = cent_x-(box_w/2)+'px'
+					box.style.top = cent_y-(box_h/2)+'px'
+					img.style.width = box_w-10+'px';//compensate for image pad
+					
+					//If animation is complete
+					if(time == 0 || time < 0){
+						//Set box styles to full positions (ensure it was completed)
+						box.style.width = i_width+'px';
+						box.style.height = i_height+18+'px';
+						box.style.left = cent_x-(i_width/2)+'px';
+						box.style.top = cent_y-(i_height/2)+'px';
+						//Add InfoBar to page
+						img.style.marginBottom ='0px';
+						box.appendChild(bar);	
+						bar.style.paddingTop ='2px';
+						//box.style.height= '25px';
+						//Fit image correctly
+						img.style.width = i_width-12+'px';
+						
+						//End animation
+						clearInterval(interval);
+					}
+				},60);
+				//Add onClick events to allow closing of window.
+				base.addEvent(overlay,'click', function(e){
+				    base.remove(overlay);
+				    base.remove(box);
+				});
+				base.addEvent(close,'click', function(e){
+				    base.remove(overlay);
+				    base.remove(box);
+				});
+				base.addEvent(img,'click', function(e){
+				    base.remove(overlay);
+				    base.remove(box);
+				});
+			});	
+		}
+	
 	}
 	//Run the parser
 	parsePage();

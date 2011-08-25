@@ -4,12 +4,13 @@ JSnip - A JavaScript Snipping package
 **JSnip** is a lightweight JavaScript based Snipping package, aimed at those who want to add interactive 
 elements to their webpages but lack the necessary JavaScript knowledge to do so.
 
-This version of JSnip contains three snippets types:
+This version of JSnip contains six snippets types:
 
 * JsnipTabs
 * JsnipShowHide
 * JsnipImageSwitcher
 * JsnipScrollToTop and JsnipScrollToAnchor
+* jsnipLightBox 
 
 A sample page showing all theses snippets in action can be seen [here](http://userbag.co.uk/demo/jsnip/sample.htm).
 
@@ -18,12 +19,21 @@ A sample page showing all theses snippets in action can be seen [here](http://us
 JSnip has been tested to run in:
 
 * Chrome
-* Firefox 3.5, 3.6, 4 and 5
+* Firefox 3.5, 3.6, 4, 5 and 6
 * IE 9 (CSS3 transitions are unsupported, Ajax functions untested for IE8/7)
 * Andorid Browser
 * IOS Browser
 
 ### Change Log
+
+#### 1.5
+* Fixed firefox bug with ImageSwitcher
+* Added Lightbox Snippet
+* Added custom animation for lightbox.
+* Added getCenterCoord, getDocumentSize, getBrowserWidth and getBrowserHeight methods to base.
+* Bugfix to crossFade effect (images of differnt sizes)
+* Styling tweaks to fix IE ImageSwitcher issue (InfoBar flickered)
+* Multiple minor bug fix's
 
 #### 1.4
 * Added support for IE7, IE8 and IOS
@@ -155,6 +165,17 @@ in the links href
 Example:
 
       <a href='#AnchorWithID' class="jsnipScrollToAnchor">Go to "AnchorWithID"</a>
+	  
+	  
+**LightBox Effect**	
+	
+Requires class: *jsnipLightBox *
+
+Apply the jsnipLightBox class to an image, to making clicking on it cause the image to open in a LightBox
+
+Example:
+
+      <img src='mydir/myimage.jpg' class='jsnipLightBox' />
 	
 	
 	

@@ -9,7 +9,7 @@
 	<script type="text/javascript" src='jsnip.min.js'></script> 
 	<!-- Local styles for Demo -->
 	<style type='text/css'>
-		body{background-color:#EEE;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size:0.9em;}
+		body{background-color:#EEE;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:0.9em; }
 		.main { width:900px; margin:0 auto;border:solid 1px #999;margin-bottom:80px;}
 		.header {background-color:#222;color:#fff;padding:8px; }
 		.header h1 {margin:5px 0;}
@@ -28,7 +28,7 @@
 	<div class='main'>
 		<div class='header'>
 			<h1>JSnip Sample page</h1>
-				Version: 0.4 alpha.
+				Version: 0.5 Alpha.
 		</div>
 		<div class='body'>
 			<div class='jsnipTabs tabsLeft'>
@@ -40,12 +40,13 @@
 						interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
 					</p>
 					<p>
-					This version of Jsnip contains 5 snippet types.
+					This version of Jsnip contains 6 snippet types.
 					<ul>
 						<li>JsnipTabs</li>
 						<li>JSnipShowHide</li>
 						<li>JsnipImageSwitcher</li>
 						<li>JsnipScrollToTop and JsnipScrollToAnchor</li>
+						<li>jsnipLightBox</li>
 					</ul>
 					<p>For basic usage instruction's please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
 					<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
@@ -57,7 +58,7 @@
 					<p>JSnip can be used in valid HTML5 documents and has been tested to work in: </p>
 					<ul>
 						<li>Chrome (full)</li>
-						<li>Firefox 3.5, 3.6, 4 and 5 (full)</li>
+						<li>Firefox 3.5, 3.6, 4, 5 and 6 (full)</li>
 						<li>IE9, IE8, IE7 (most*)</li>
 						<li>Android/IOS</li>
 					</ul>
@@ -77,11 +78,11 @@
 				</div>
 			</div>	
 			<div class='jsnipImageSwitcher float_left' style='width:400px;' itemprop='crossFade'>
-				<a href='#ThisOneIsLinked'><img src="img/skunk.jpg" alt="A baby skunk!"/></a>
-				<a href='#thisOneToo!'><img src="img/otter.jpg" alt="An otter" style='display:none;'/></a>
-				<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
-				<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
-				<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
+				<img src="img/skunk.jpg" alt="A baby skunk!" class='jsnipLightBox' />
+				<img src="img/otter.jpg" alt="An otter" style='display:none;' class='jsnipLightBox'/>
+				<img src="img/bunny.jpg" alt="A Bunny Rabbit" class='jsnipLightBox' style='display:none;'/>
+				<a href='#ThisOneIsLinked'><img src="img/seal.jpg" alt="Upside down Seal"  style='display:none;'/></a>
+				<a href='#thisOneToo!'><img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog"  style='display:none;'/></a>
 			</div>
 			<div class='jsnipShowHide' itemtype='open'>
 				<div class='title'>Open Box</div>

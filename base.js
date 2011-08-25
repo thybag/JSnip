@@ -1,7 +1,7 @@
  /**
  * Base provides a set of simple but often useful javaScript functions.
  * @author Carl Saggs
- * @version 0.5.3 alpha
+ * @version 0.5.7 alpha
  * @source https://github.com/thybag/JSnip
  *
  * @module Base.animation for animation methods
@@ -131,8 +131,9 @@
 		 * Fade DOM node in.
 		 * @param node DOM node
 		 * @param callback function (optional)
+		 * @param speed Animation Speed
 		 */
-		this.fadeIn = function(node, callback,speed){
+		this.fadeIn = function(node, callback, speed){
 		
 			//Calcuate animation speed
 			if(!speed){speed=275;}
@@ -162,8 +163,9 @@
 		 * Fade DOM node out.
 		 * @param node DOM node
 		 * @param callback function (optional)
+		 * @param speed Animation Speed
 		 */
-		this.fadeOut = function(node,callback,speed){
+		this.fadeOut = function(node, callback, speed){
 
 			//Calcuate animation speed
 			if(!speed){speed=275;}
@@ -362,6 +364,47 @@
 		return {x: my_x, y: my_y};
 	
 	}
+	/**
+	 * get viewPort width
+	 * @return width
+	 */
+	this.getBrowserWidth = function(){
+		return window.innerWidth || document.documentElement.clientWidth ;
+	}
+	
+	/**
+	 * get viewPort height
+	 * @return width
+	 */
+	this.getBrowserHeight= function(){
+		return window.innerHeight || document.documentElement.clientHeight ;
+	}
+	
+	/**
+	 * get full document Size
+	 * @return Object { width,height }
+	 */
+	this.getDocumentSize = function(){
+		return {
+			height:(document.height !== undefined) ? document.height : document.body.offsetHeight,
+			width: (document.width !== undefined) ? document.width : document.body.offsetWidth
+		}
+	}
+	
+	/**
+	 * get coords of center of viewport
+	 * @return Object { x,y }
+	 */
+	this.getCenterCoord = function(){
+		//Work out Y offset;
+		yoffset = window.pageYOffset || document.body.scrollTop;
+		
+		return {
+			x: (this.getBrowserWidth()/2),
+			y: (this.getBrowserHeight()/2) + yoffset
+		}
+	}
+	
 	/**
 	* Get nodes using CSS selectors.
 	* Uses Sizzle!
