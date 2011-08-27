@@ -1,6 +1,6 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.5.1 alpha
+ * @version 0.5.2 alpha
  * @author: Carl Saggs
  * @source https://github.com/thybag/JSnip
  */
@@ -86,7 +86,7 @@ base.onLoad(function(){
 				//Update tagline with the new title
 				tagLine.innerHTML = images[current].getAttribute('alt');
 				//Get animation type
-				if(node.getAttribute('itemprop') == 'crossFade'){
+				if(node.getAttribute('data-animation') == 'crossFade'){
 					animating=true;
 					
 					//Fiddle positioning so images site on top of each other
@@ -132,7 +132,7 @@ base.onLoad(function(){
 		 * showHide
 		 * Create an showHide from provided node
 		 * @hint title Attribute is the text show
-		 * @hint itemtype Attribute can be set to "open" to make snippet open by default
+		 * @hint data-mode Attribute can be set to "open" to make snippet open by default
 		 *
 		 * @param Node defined as showHide
 		 */
@@ -205,7 +205,7 @@ base.onLoad(function(){
 				a.fill();
 			}	
 			
-			if(node.getAttribute('itemtype') != 'open'){
+			if(node.getAttribute('data-mode') != 'open'){
 				inner.style.display = 'none';
 				base.rotate(arrow,180);
 			}
@@ -485,9 +485,9 @@ base.onLoad(function(){
 				});
 				
 				//Find out if large image is avaible
-				if(node.getAttribute('itemprop') != null && node.getAttribute('itemprop').length > 1){
+				if(node.getAttribute('data-image') != null && node.getAttribute('data-image').length > 1){
 					//User larger image if its specified in prop
-					img.src = node.getAttribute('itemprop');
+					img.src = node.getAttribute('data-image');
 				}else{
 					//Else use current image src
 					img.src = node.src;
