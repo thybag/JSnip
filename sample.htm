@@ -2,24 +2,76 @@
 <html dir="ltr" lang="en-GB">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>JSnip Sample</title>
+	<title>JSnip: Snippet Sample Page</title>
 	<!-- Include JSnip -->
 	<link rel='stylesheet' href='jsnip.css' type='text/css' />
 	<script type="text/javascript" src='base.min.js'></script> 
-	<script type="text/javascript" src='jsnip.min.js'></script> 
+	<script type="text/javascript" src='jsnip.js'></script> 
 	<!-- Local styles for Demo -->
 	<style type='text/css'>
-		body{background-color:#EEE;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:0.9em; }
-		.main { width:900px; margin:0 auto;border:solid 1px #999;margin-bottom:80px;}
-		.header {background-color:#222;color:#fff;padding:8px; }
-		.header h1 {margin:5px 0;}
-		.body {padding:5px;background-color:#fff;}
-		.tabsLeft {float:left;width:470px;} 
+		body{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+			font-size:0.9em; 
+			margin:0;padding:0;
+		}
+		.main .header {
+			background-color:#222;
+			color:#fff;
+			padding:8px; 
+		}
+		.main .header .heading{
+			width:880px; 
+			margin:0 auto;
+		}
+		.main .header h1 {
+			margin:5px 0;
+		}
+		.main .header a {
+			color:#fff;
+		}
+		.main .header .get{
+			width:120px;
+			height:20px;
+			color:#fff;
+			float:right;
+		}
+		.body {
+			padding:5px;background-color:#fff;width:900px; 
+			margin:0 auto;
+		}
+		a {color:#000;}
+		.body .seperator{
+			background-color:#222;
+			padding:4px;
+			clear:both;
+			color:#fff;
+			margin:5px 0;
+			font-weight:bold;
+		}
+		.smallerText .inner {
+			font-size:0.95em;
+		}
+		.thumbImg {width:110px;height:110px;border:0;padding:5px;}
+
+		h4 {padding: 4px 0;margin: 2px 0; }
+
+		.snippetDemo {
+			float:right;
+			width:350px;
+		}
+		.footerish {
+			background-color:#222;padding:8px;color:#fff;clear:both;
+		}
+		.footerish strong { display:inline-block; width:110px; }
+		.footerish a {color:#fff;text-decoration:none;}
+		.halLeft {float:left;width:500px;} 
+		.halRight {float:Right;width:390px;} 
+		.code {padding:0 5px; margin:10px;  width:400px; border-left:solid 1px;}
 		.float_left {float:left;margin:8px;margin-top:0;} 
 		.display_center {margin: 4px auto;}
 		.f_right {float:right; margin:4px;}
 		.text {padding:4px;}
-		.buttonish {border:solid 1px; padding:4px; background-color:#F9F9F9;}
+		.buttonish {clear:both; border:solid 1px; padding:4px; background-color:#F9F9F9;}
 		.buttonish a{color:#000;}
 		
 	</style>
@@ -27,128 +79,248 @@
 <body>
 	<div class='main'>
 		<div class='header'>
-			<h1>JSnip Sample page</h1>
-				Version: 0.5.1 Alpha.
+			
+			<div class='heading'>
+				<div class='get'><a href='https://github.com/thybag/JSnip'>Get the Source?</a></div>
+				<h1>JSnip Sample page</h1>
+				Version: 0.5.2 Alpha.
+			</div>
 		</div>
 		<div class='body'>
-			<div class='jsnipTabs tabsLeft'>
-				<div>
-					<h2>Welcome</h2>
-					<p><strong>Welcome to the JSnip Sample page.</strong></p>
-					<p>
-						<strong>JSnip</strong> is a lightweight JavaScript based Snipping package, aimed at those who want to add 
-						interactive elements to their webpages but lack the necessary JavaScript knowledge to do so.
-					</p>
-					<p>
-					This version of Jsnip contains 6 snippet types.
-					<ul>
-						<li>JsnipTabs</li>
-						<li>JSnipShowHide</li>
-						<li>JsnipImageSwitcher</li>
-						<li>JsnipScrollToTop and JsnipScrollToAnchor</li>
-						<li>jsnipLightBox</li>
-					</ul>
-					<p>For basic usage instruction's please check out my article <a href='http://userbag.co.uk/development/introducing-jsnip/'>here</a>.</p>
-					<p>For the JavaScript code behind it all, checkout my <a href='https://github.com/thybag/JSnip'>Github</a>.</p>
-					<p>&nbsp;</p>
-					<p>If you'd like to request a new snippet for the next version feel free to get in <a href="http://userbag.co.uk/contact/">touch</a>.</p>
+			<div class='halRight'>
+				<div class='jsnipShowHide smallerText' data-mode='open'>
+					<div class='title'>Supported Snippets</div>
+					<div class='inner'>
+						<p>Jsnip currently offers 6 Snippet types:</p>
+						<p>
+							<a href='#jsnipTabs' class='jsnipScrollToAnchor'>Tabs</a><br/>
+							<a href='#jsnipShowHide' class='jsnipScrollToAnchor'>Show Hides</a><br/>
+							<a href='#jsnipImageSwitcher' class='jsnipScrollToAnchor'>Image Switcher</a><br/>
+							<a href='#jsnipScrollToAnchor' class='jsnipScrollToAnchor'>Scroll To Anchor</a><br/>
+							<a href='#jsnipScrollToTop' class='jsnipScrollToAnchor'>Scroll To Top</a><br/>
+							<a href='#jsnipLightBox' class='jsnipScrollToAnchor'>LightBox</a><br/>
+						</p>
+						<p>If there's a snippet you want and its not already supported, feel free to email me with a request.</p>
+					</div>
 				</div>
-				<div title='About'>
-					<p>JSnip is an light weight javascript snippeting package.</p>
-					<p>JSnip can be used in valid HTML5 documents and has been tested to work in: </p>
-					<ul>
-						<li>Chrome (full)</li>
-						<li>Firefox 3.5, 3.6, 4, 5 and 6 (full)</li>
-						<li>IE9, IE8, IE7 (most*)</li>
-						<li>Android/IOS</li>
-					</ul>
-					<p>* Limited CSS3 supported. Ajax functions only tested in IE9</p>
-					<p>The look and feel of JSnip snippets can be altered easily using CSS.</p>
-					<p>All Jsnip snippets are nestable, so you can place tabs in showHides, then another set of showHides, and tabs inside that if you feel the need.</p>
+				<div class='jsnipShowHide smallerText' title='Browser Support' data-mode='open'>
+					<p>JSnip uses only valid HTML5 and is supported in all major browsers. All snippets are fully nestable.</p>
+					<p>Tested in: IE7-9, Firefox 3.7-6, Chrome, IOS Browser, Andorid Browser</p>
+				</div>
+			</div>
+			<div class='halLeft'>
+					<h3>Welcome to the JSnip Sample page.</h3>
+					<p>
+						<strong>JSnip</strong> is a lightweight JavaScript Snipping package, aimed at those who want to add 
+						interactive elements to their webpage's but lack the necessary JavaScript knowledge to do so.
+					</p>	
+					<p>
+						JSnip is designed to be incredibly simple to use and only request a basic HTML knowhow to get started.
+						Creating a new JSnip snippet takes no more work than simply adding an additional class.
+					</p>
+					<h4>Try out the LightBox snippet</h4>
+					<img src='img/skunk.jpg' class='jsnipLightBox thumbImg' alt="A baby skunk"/>
+					<img src='img/otter.jpg'  class='jsnipLightBox thumbImg' alt="An Otter"/>
+					<img src='img/seal.jpg'  class='jsnipLightBox thumbImg' alt="An upside down seal."/>
+					<img src='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-150x150.jpg' data-image='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-1024x768.jpg?ss2' class='jsnipLightBox thumbImg' alt="A Photo taken in Solvenia"/>
+			</div>
+			<br style='clear:both;'/>
+			<br style='clear:both;'/>
+			<div class='footerish'>
+				<strong>Licence:</strong><a href='http://en.wikipedia.org/wiki/MIT_License'>MIT (Open source / free)</a><br/>
+				<strong>Source code:</strong><a href='https://github.com/thybag/JSnip/'>Github Repo</a><br/>
+				<strong>Download:</strong><a href='https://github.com/thybag/JSnip/zipball/master'>Latest Version</a><br/>
+				<strong>Author:</strong><a href='http://userbag.co.uk/about'>Carl Saggs</a><br/>
+			</div>
+			<br style='clear:both;'/>
+			<div class='jsnipTabs'>
+				<div>
+					<h2>Getting started with Jsnip</h2>
+					<p>JSnip was designed to be as easy as possible to get up and running on your webpage's.<br/>
+					Just <a href=''>download</a> the jsnip files and include them in to the head of the webpage you wish to use the snippets in.</p>
+					
+					<div class='code'>
+					&lt;!-- Include JSnip --><br/>
+					&lt;link rel='stylesheet' href='jsnip/jsnip.css' type='text/css' /&gt;<br/>
+					&lt;script type="text/javascript" src='jsnip/base.min.js'&gt;&lt;/script&gt;<br/>
+					&lt;script type="text/javascript" src='jsnip/jsnip.min.js'&gt;&lt;/script&gt; 
+					</div>
+					
+					<p>Once the above code is included in to your HTML Page, you can use JSnip snippets by simply adding the relevant JSnip class
+					to HTML elements on your page. For example if you want to add a LightBox to an image, all you would need to do is add "jsnipLightBox"
+					to its class.</p>
+					
+					<p>Full usage instrctions for each snippet can be found below...</p>
 				</div>
 				<div>
 					<h2>How does it work?</h2>
-					<p>The JSnip snippets are powered by a simple javascript library called <a href='https://github.com/thybag/JSnip/blob/master/base.js'>base.js</a> which i wrote along side the snippets themselves.</p>
-					<p>Along with a set of shorthand functions, helper methods (such as prepend,hasclass, addclass etc) JSnip also offers basic
-					set of animtions, fade's, scrolls and slides as well as a nice little AJAX request wrapper.</p>
-					<p>A full commented version of base.js should be packaged along side the minified version included in this document</p>
-					<div class='jsnipShowHide' title='Open me'>
-						<p>This is just here to show that ShowHides are happy to work inside tabs.</p>
-					</div>
+					<p>The JSnip snippets are all powered by a small JavaScript library called <a href='https://github.com/thybag/JSnip/blob/master/base.js'>base.js</a> which I am creating alongside JSnip itself.</p>
+					<p>base.js offers a variety of simple, yet incredibly helpful methods in addition to those provided by JavaScript itself. These include a
+					range of shorthand functions, helper method's(Such as prepend, hasClass, addClass, etc.) , AJAX request wrappers and small animation library consisting of fades, scrolls and slides.
+					</p>
+					<p>A fully commented version of base.js should be packaged along side the minified version used in this page.</p>
+		
 				</div>
 			</div>	
-			<div class='jsnipImageSwitcher float_left' style='width:400px;' itemprop='crossFade'>
-				<img src="img/skunk.jpg" alt="A baby skunk!" class='jsnipLightBox' />
-				<img src="img/otter.jpg" alt="An otter" style='display:none;' class='jsnipLightBox'/>
-				<img src="img/bunny.jpg" alt="A Bunny Rabbit" class='jsnipLightBox' style='display:none;'/>
-				<a href='#ThisOneIsLinked'><img src="img/seal.jpg" alt="Upside down Seal"  style='display:none;'/></a>
-				<a href='#thisOneToo!'><img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog"  style='display:none;'/></a>
-			</div>
-			<div class='jsnipShowHide' itemtype='open'>
-				<div class='title'>Open Box</div>
-				<div class='inner'>
-					<p> This box is open</p>
-					<div class='jsnipShowHide' title='Closed box 1'>
-						<p><strong>Lots of text </strong></p>
-						<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-						<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.</p>
-
+			<br style='clear:both;'/>
+			<div class='seperator'>JSnip: Tabs <a id="jsnipTabs"></a></div>
+			<div class='snippetDemo'>
+				<div class='jsnipTabs'>
+					<div>
+						<h2>Tab 1</h2>
+						<p>Tab Snippet Demo</p>
+						<p>This tab is using an H2 to specify its tab title</p>
 					</div>
-					<div class='jsnipShowHide' title='Closed box 2'>
-						<p>Only a little bit of text</p>
-
+					<div title='Tab 2'>
+						<p>This tab is useing the title attribute of the tab Div to specify its tab title.</p>
 					</div>
-					<div class='jsnipShowHide' title='Closed box 3' >
-						<div class='jsnipImageSwitcher f_right' style='width:400px;'>
-							<img src="img/skunk.jpg" alt="A baby skunk!"/>
-							<img src="img/otter.jpg" alt="An otter" style='display:none;'/>
-							<img src="img/bunny.jpg" alt="A Bunny Rabbit" style='display:none;'/>
-							<img src="img/seal.jpg" alt="Upside down Seal" style='display:none;'/>
-							<img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog" style='display:none;'/>
-						</div>	
-						<p>This box has both a chunk of text and an ImageSwitcher in it.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.
-						Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros.</p><p> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+					<div title='Tab 3'>
+						<p>You can add as many tabs in a Jsnip tabs snippet as will fit its width.</p>
 					</div>
 				</div>
 			</div>
-			<div class='text'>
-				<div class='buttonish'>
-					Scroll to: <a href='#Topic1' class='jsnipScrollToAnchor'> Topic 1</a> <a href='#Topic2' class='jsnipScrollToAnchor'>Topic 2</a> <a href='#Topic3' class='jsnipScrollToAnchor'>Topic 3</a> <a href='#Topic4' class='jsnipScrollToAnchor'> Topic 4</a>
-				</div>
-				<a id='Topic1'></a>
-				<h3>Topic title 1</h3>
-				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				<p><img src='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-150x150.jpg' itemprop='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-1024x768.jpg?ss2' class='jsnipLightBox' style='width:130px;height:130x;float:left;padding:5px;' alt="A Photo taken in Solvenia"/>
-				Nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipTabs</strong></p>
+				<p><strong>Summary:</strong><br/>
+					The tabs snippet can be used in a number of ways
+					in order to add JavaScript Tabs functionality to a page.
 				</p>
-				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-				<a id='Topic2'></a>
-				<h3>Topic title 2</h3>
-				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-				<p>Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-				<a id='Topic3'></a>
-				<h3>Topic title 3</h3>
-				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada varius neque. Nulla sollicitudin arcu ac arcu ultricies at tincidunt nibh laoreet. Aliquam ullamcorper interdum mollis.</p>
-				<p>Aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				
-				<a id='Topic4'></a>
-				<h3>Topic title 4</h3>
-				<p>Ut condimentum aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				<p>Praesent ultricies commodo diam, nec laoreet justo tincidunt ut. Sed nisl ipsum, suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
-				<p>Aliquet sapien, vel rutrum nunc gravida eget. Nam interdum eros suscipit massa gravida pellentesque. Ut vitae odio vitae neque blandit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi blandit, tellus sed placerat suscipit, nisl ipsum auctor lectus, accumsan euismod est risus ac urna. Morbi id velit nulla, quis lobortis lorem. Integer eget lectus nulla. Sed aliquet, nibh sed convallis facilisis, erat dui commodo arcu, luctus fringilla velit libero et nulla. </p>
-				<p>Suscipit sit amet fermentum eget, egestas eget nulla. Nullam faucibus, nisi a fringilla vehicula, massa dolor placerat orci, non semper mi ligula a leo. Mauris ac rutrum sem. Vestibulum luctus metus sit amet ante tristique ornare eget eu augue. Maecenas eros ante, pellentesque sit amet placerat eu, volutpat placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean in nibh sed sem fermentum facilisis.</p>
+				<p><strong>Usage Instructions:</strong><br/>
+					Simply add a Div with the class "jsnipTabs" to your document, then
+					every first level div contained within it will become a tab.
+					The tab title can be specified either by a h2 within the tab div, or by adding it to the divs title attribute.
+				</p>
 			</div>
 			
+			<br style='clear:both;'/>
+			<div class='seperator'>JSnip: ShowHide<a id="jsnipShowHide"></a></div>
+			<div class='snippetDemo'>
+				<div class='jsnipShowHide' title='Open showHide' data-mode='open'>
+					<p>showHide Snippet Demo</p>
+					<div class='jsnipShowHide'>
+						<div class='title'>Closed showHide 1</div>
+							This showhide has its title specified by a title
+					</div>			
+					<div class='jsnipShowHide'>
+						<div class='title'>Closed showHide 2</div>
+						<div class='inner'>
+							This showHide has both a title and inner Div.
+						</div>
+					</div>
+					<div class='jsnipShowHide' title='Closed showHide 3'>
+						This showHide has its titled specified using the title attribute of the showHide div.
+					</div>						
+				</div>
+			</div>
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipShowHide</strong></p>
+				<p><strong>Summary:</strong><br/>
+					The showHide snippet can be used to create collapsible content areas within a webpage. Clicking the title
+					of a showHide will open or close it depending on its current state.
+				</p>
+				<p><strong>Usage Instructions:</strong><br/>
+					Add a div with the class "jsnipShowHide" to your document to create a new showHide around all content inside.
+					The ShowHides title can be specified either by using the showHide div's title attribute, or by including within it
+					a div with the class "title".<br/>
+					Use data-mode='open' to make a showHide appear as open by default.<br/><br/>
+					If needed it is also possible to include a div with the class inner to ensure all styles are applied even before the showHide 
+					snippet is instantiated.
+				</p>
+			</div>
+			<br style='clear:both;'/>
+			<div class='seperator'>JSnip: Image Switcher	<a id="jsnipImageSwitcher"></a></div>
+			<div class='snippetDemo'>
+				<div class='jsnipImageSwitcher' style='width:350px;' >
+					<img src="img/skunk.jpg" alt="A baby skunk!" />
+					<img src="img/otter.jpg" alt="An otter" style='display:none;' />
+					<img src="img/bunny.jpg" alt="A Bunny Rabbit"  style='display:none;'/>
+					<a href='#thisImageIsLinked'><img src="img/seal.jpg" alt="Upside down Seal"  style='display:none;'/></a>
+					<a href='#thisOneToo!'><img src="img/kittendog.jpg" alt="A Kitten sleeping next to a big dog"  style='display:none;'/></a>
+				</div>
+			</div>
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipImageSwitcher</strong></p>
+				<p><strong>Summary:</strong><br/>
+					The imageSwitcher snippet can be used display a set of images with captions, that a user can then scroll through.
+				</p>
+				<p><strong>Usage Instructions:</strong><br/>
+					Add a div with the class "jsnipImageSwitcher" to your document, then add any images that you would like to be included
+					in the resulting ImageSwitcher. If an alt tag is specified for an image it will be used by the snippet for a caption.<br/>
+					Its possible to wrap the images within this snippet in link tags in order to link each image to a location. Alternately you
+					can add the jsnipLightBox class to the snippet so that selected images will open within a LightBox.
+					<br/>
+					The ImageSwitcher also includes a beta version of a crossFade transition. It can be activated by adding the code " data-animation='crossFade' "
+					to the imageSwitcher div.
+				</p>
+			</div>
+	
+			<br style='clear:both;'/>
+			<div class='seperator'>JSnip: Scroll to Anchor<a id="jsnipScrollToAnchor"></a></div>
 			
+				<div class='snippetDemo'>
+					<strong> Sample Link to invoke snippet</strong><br/>
+					<p><a href='#jsnipTabs' class='jsnipScrollToAnchor'>Scroll to JSnip Tabs</a></p>
+				</div>
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipScrollToAnchor</strong></p>
+					<p><strong>Summary:</strong><br/>
+						The scroll to anchor snippet can be used to scroll a users browser to a particular location within a webpage.
+					</p>
+					<p><strong>Usage Instructions:</strong><br/>
+						Add the class "jsnipScrollToAnchor" to a link element that is pointed towards an anchor tag to
+						make it use the animation provided by the Scroll to anchor snippet.<br/>
+						
+						Please ensure the anchor tag you wish to scroll to has the id specified  by the link.	
+					</p>
+			</div>
 			
+			<br style='clear:both;'/>
 			
+			<div class='seperator'>JSnip: Scroll to Top<a id="jsnipScrollToTop"></a></div>
 			
-			<div class='jsnipScrollToTop buttonish'>Back to top</div>
+				<div class='snippetDemo'>
+					<strong>Snippet Sample:</strong><br/>
+					<div class='jsnipScrollToTop'>Scroll back to the page's top</div>
+				</div>
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipScrollToTop</strong></p>
+					<p><strong>Summary:</strong><br/>
+						Add this snippet to any element in your page to cause clicking on it to scroll a user back to the top of the page.
+					</p>
+					<p><strong>Usage Instructions:</strong><br/>
+						Add the class "jsnipScrollToTop" to the element you wish to cause a user to scroll back to the page's top.	
+					</p>
+			</div>
+			
+			<br style='clear:both;'/>
+			<div class='seperator'><a id="jsnipLightBox"></a>JSnip: LightBox</div>
+
+			<div class='snippetDemo'>
+				<img src='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-150x150.jpg' data-image='http://userbag.co.uk/wp-content/uploads/2011/08/DSCF1622-1024x768.jpg?ss2' class='jsnipLightBox thumbImg' alt="A Photo taken in Solvenia"/>
+				<img src='img/kittendog.jpg' class='jsnipLightBox thumbImg' alt='A Caption'/>
+			</div>
+			<div class='halLeft'>
+				<p>Class to use: <strong>jsnipLightBox</strong></p>
+					<p><strong>Summary:</strong><br/>
+						Jsnip lightbox can easily add Lightbox functionality to any images on your page.
+
+					</p>
+					<p><strong>Usage Instructions:</strong><br/>
+						A basic jsnip lightbox can be used by just adding the class "jsnipLightBox" to an image. Once added clicking the image
+						will then open it within the Jsnip lightbox.<br/><br/>
+						
+						If you use separate thumbnail images for your page and wish to open the full version of the image when its selected,
+						add the URL of the full image as the images data-image attribute.<br/><br/>
+						The Lightbox gets the images caption from the alt text of the images you have applied the snippet too.
+					</p>
+			</div>
+			<br style='clear:both;' />
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<div class='jsnipScrollToTop buttonish'>Go back to the top?</div>
 			<div style='clear:both;'></div>
 		</div>
 	</div>

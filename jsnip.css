@@ -58,7 +58,7 @@
 }
 .jsnipShowHide .inner{
 	border:solid 1px #999;
-	background-color:#f9f9f9;
+	background-color:#FDFDFD;
 	padding:4px;
 	overflow:hidden;
 	margin-left:0 !important;
@@ -96,7 +96,7 @@
 	margin-bottom:5px;
 	padding:4px;
 	background-color:#bbb;
-	background-color:#f9f9f9;
+	background-color:#FDFDFD;
 }
 .jsnipTabs .tabContent p {margin:6px 2px;}
 .jsnipTabs .tabContent:after {

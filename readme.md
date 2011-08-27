@@ -26,6 +26,11 @@ JSnip has been tested to run in:
 
 ### Change Log
 
+#### 1.5.2
+* In accordances with some changes in the HTML5 spec, have switched from using itemprops to data items for additional paramiters.
+* Brand new sample page, including instructions.
+* Styling tweaks.
+
 #### 1.5.1
 * Signifcantly improve scaling system for lightBox (now actually takes height in to account)
 * Loading image added + checks to ensure image is loaded before grabbing width/height
@@ -141,7 +146,7 @@ Must contains a number of image tags.
 The alt attribute of each image is used as the caption.
 
 Other Attributes:     
-itemprop: crossFade (expermental transition type)
+data-animation: crossFade (expermental transition type)
 
 Example:
 
