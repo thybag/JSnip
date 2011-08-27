@@ -103,7 +103,7 @@ Requires class: *jsnipShowHide*
 
 Other Attributes:
 Title: Text show on the showHide bar itself.   
-itemType: When set to open, the snippet will default to display as open.
+data-mode: When set to open, the snippet will default to display as open.
 
 Example:
 
@@ -184,7 +184,7 @@ Example:
 Requires class: *jsnipLightBox *
 
 Other Attributes:
-itemprop: You can use this value specifiy the URL to a larger version of the image for use with the lightbox
+data-image: You can use this value specifiy the URL to a larger version of the image for use with the lightbox
 
 Apply the jsnipLightBox class to an image, to making clicking on it cause the image to open in a LightBox
 
