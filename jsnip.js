@@ -361,7 +361,7 @@ base.onLoad(function(){
 				box_w = 20,
 				box_h = 20;
 				//Set Animation time
-				var time = 8;
+				var time = 20;
 				//Get Center
 				var cent_x =base.getCenterCoord().x;
 				var cent_y =base.getCenterCoord().y;
@@ -468,7 +468,7 @@ base.onLoad(function(){
 							//End animation
 							clearInterval(interval);
 						}
-					},60);
+					},20);
 					//Add onClick events to allow closing of window.
 					base.addEvent(overlay,'click', function(e){
 						base.remove(overlay);

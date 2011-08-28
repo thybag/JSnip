@@ -1,7 +1,7 @@
  /**
  * Base provides a set of simple but often useful javaScript functions.
  * @author Carl Saggs
- * @version 0.5.8 alpha
+ * @version 0.5.9 alpha
  * @source https://github.com/thybag/JSnip
  *
  * @module Base.animation for animation methods
@@ -137,7 +137,7 @@
 		
 			//Calcuate animation speed
 			if(!speed){speed=275;}
-			var incr  = 1/(speed/60); //Speed
+			var incr  = 1/(speed/20); //Speed
 			
 			var cur_op = 0;
 			node.style.opacity = 0;
@@ -156,7 +156,7 @@
 					//Call callback function is one was provided
 					if(callback !=null)	callback();
 				}
-			}, 60);
+			}, 20);
 		}
 		/**
 		 * fadeOut
@@ -169,7 +169,7 @@
 
 			//Calcuate animation speed
 			if(!speed){speed=275;}
-			var incr  = 1/(speed/60); //Speed
+			var incr  = 1/(speed/20); //Speed
 		
 			var cur_op = 1;
 			node.style.opacity = 1;
@@ -190,7 +190,7 @@
 					//Call callback function is one was provided
 					if(callback !=null)	callback();
 				}
-			}, 60);
+			}, 20);
 		}
 		/**
 		 * slideDown
@@ -284,7 +284,7 @@
 			if(toScroll < 0){toScroll = -toScroll;  direction ='down';}
 			
 			//Work out timeings
-			time=15;
+			time=18;
 			inc = toScroll/time;
 			
 			//Animate
@@ -304,7 +304,7 @@
 					clearInterval(interval);
 					if(callback !=null)	callback();
 				}
-			},50);
+			},20);
 			
 		}
 	}
