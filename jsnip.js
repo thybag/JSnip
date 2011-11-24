@@ -1,6 +1,6 @@
 /**
  * Jsnip - A Lightweight Javascript Snippeting package
- * @version 0.5.2 alpha
+ * @version 0.5.3 alpha
  * @author: Carl Saggs
  * @source https://github.com/thybag/JSnip
  */
@@ -27,7 +27,7 @@ base.onLoad(function(){
 			//For each possible snippet
 			for(var v=0;v<validSnippets.length;v++){
 				//If they happen to this snippet, call the relevnt snippet function
-				if(this.hasClass(nodes[s],validSnippets[v])){
+				if(base.hasClass(nodes[s],validSnippets[v])){
 					new snippet[validSnippets[v]](nodes[s]);
 				}				
 			}

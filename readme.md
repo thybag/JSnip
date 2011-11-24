@@ -26,6 +26,9 @@ JSnip has been tested to run in:
 
 ### Change Log
 
+#### 1.5.3
+* Correct scopeing bug in base.js
+
 #### 1.5.2
 * In accordances with some changes in the HTML5 spec, have switched from using itemprops to data items for additional paramiters.
 * Brand new sample page, including instructions.
