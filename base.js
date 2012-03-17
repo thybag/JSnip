@@ -101,6 +101,8 @@
 				}
 			}
 			xmlhttp.open("GET", location, true);
+			//Add standard AJAX header.
+			xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			xmlhttp.send(null);
 	}
 	/**
@@ -262,7 +264,6 @@
 					if(callback !=null)	callback();
 				}
 			}, 20);
-			
 		}
 		/**
 		 * scrollTo
@@ -451,6 +452,29 @@
 				obj.attachEvent('on'+event, callback);
 		}
 	}
+
+	/**
+	 * triggerEvent
+	 * Fire an event on a given object
+	 *
+	 * @scope private
+	 * @param node. Objects to fire event on
+	 * @return event_name. type of event
+	 */
+	this.triggerEvent = function(obj, event_name){
+		if (document.createEvent) {
+			//Good browsers
+			var evt = document.createEvent("HTMLEvents");
+    		evt.initEvent(event_name, true, true);
+    		obj.dispatchEvent(evt);
+		}else{
+			//old IE versions
+			var evt = document.createEventObject();
+    		evt.eventType = 'on'+ event_name;
+    		obj.fireEvent(evt.eventType, evt);
+		}
+	}
+
 	/**
 	 * Base.log
 	 * Quick function to allow snippets to throw warnings. 
@@ -460,7 +484,6 @@
 	this.log = function(msg){
 		if(console) if(console.log) console.log('Warning: '+msg);
 	}
-	
 	
 	//Add base to global scope
 	window.base = this;
