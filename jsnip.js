@@ -317,9 +317,9 @@ base.onLoad(function(){
 				return;
 			}
 			//Attach to onClick of this node
-			base.addEvent(node, 'click', function(e){
+			base.addEvent(node, 'click', function(event){
 				//prevent normal action
-				if(e.preventDefault){e.preventDefault();}else{e.returnValue = false;}
+				if(event.preventDefault){event.preventDefault();}else{event.returnValue = false;}
 				
 				//Get location of the #Node
 				coord = base.getCoord(nodeRef);
@@ -336,13 +336,13 @@ base.onLoad(function(){
 		 */
 		this.jsnipScrollToTop = function(node){
 			//Attach to onClick of this node
-			base.addEvent(node,'click', function(e){
+			base.addEvent(node,'click', function(event){
 				//Use scrollTo to animate scroll
 				base.animate.scrollTo(window, 0 ,function(){
 					//Nothing
 				});
 				//prevent normal action
-				if(e.preventDefault){e.preventDefault();}else{e.returnValue = false;}
+				if(event.preventDefault){event.preventDefault();}else{event.returnValue = false;}
 			});	
 		}
 		/**
