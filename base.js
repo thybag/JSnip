@@ -1,7 +1,7 @@
  /**
  * Base provides a set of simple but often useful javaScript functions.
  * @author Carl Saggs
- * @version 0.6 alpha
+ * @version 0.6.2 alpha
  * @source https://github.com/thybag/JSnip
  *
  * @module Base.animation for animation methods
